@@ -9,8 +9,7 @@ Map<String, Map<String, TextEditingController>> paramController = {};
 
 
 class FloatingButton extends StatefulWidget {
-  const FloatingButton({super.key, required this.title});
-  final String title;
+  const FloatingButton({super.key});
 
   @override
   State<FloatingButton> createState() => _FloatingButtonState();

@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      floatingActionButton: const FloatingButton(title: 'FloatingButton'),
+      floatingActionButton: const FloatingButton(),
     );
   }
 }

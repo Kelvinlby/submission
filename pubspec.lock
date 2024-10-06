@@ -106,10 +106,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_plugin_android_lifecycle
-      sha256: "9ee02950848f61c4129af3d6ec84a1cfc0e47931abc746b03e7a3bc3e8ff6eda"
+      sha256: "9b78450b89f059e96c9ebb355fa6b3df1d6b330436e0b885fb49594c41721398"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.22"
+    version: "2.0.23"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -120,6 +120,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  globbing:
+    dependency: transitive
+    description:
+      name: globbing
+      sha256: "4f89cfaf6fa74c9c1740a96259da06bd45411ede56744e28017cc534a12b6e2d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -236,10 +244,10 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences_android
-      sha256: "480ba4345773f56acda9abf5f50bd966f581dac5d514e5fc4a18c62976bbba7e"
+      sha256: "3b9febd815c9ca29c9e3520d50ec32f49157711e143b7a4ca039eb87e8ade5ab"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.2"
+    version: "2.3.3"
   shared_preferences_foundation:
     dependency: transitive
     description:
@@ -317,6 +325,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  system_info2:
+    dependency: "direct main"
+    description:
+      name: system_info2
+      sha256: "65206bbef475217008b5827374767550a5420ce70a04d2d7e94d1d2253f3efc9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0"
   term_glyph:
     dependency: transitive
     description:
@@ -375,4 +391,4 @@ packages:
     version: "1.1.0"
 sdks:
   dart: ">=3.5.3 <4.0.0"
-  flutter: ">=3.22.0"
+  flutter: ">=3.24.0"
