@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="icon.png" alt="Logo" width="102.4" height="102.4">
+  <img src="icon.png" alt="Logo" width="128" height="128">
 <h3 align="center">Submission</h3>
 <p>ML dashboard for any framework.</p>
 </div>
