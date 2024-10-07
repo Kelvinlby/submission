@@ -155,10 +155,11 @@ Future<Widget> _getPanel(Function setState, Color color) async {
       ),
       const SizedBox(height: 8),
       configPath != null
-          ? Card.filled(color: color, child: ModelConfigCard(path: configPath, width: width))
+          ? Card(color: color, child: ModelConfigCard(path: configPath, width: width))
           : const SizedBox(height: 0),
+      const SizedBox(height: 8),
       configPath != null
-          ? Card.filled(color: color, child: TrainingConfigCard(path: configPath, width: width))
+          ? Card(color: color, child: TrainingConfigCard(path: configPath, width: width))
           : const SizedBox(height: 0),
     ],
   );
