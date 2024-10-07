@@ -1,6 +1,12 @@
-# Submission
+<div>
+  <img src="icon.png" alt="Logo" width="1024" height="1024">
 
-ML dashboard for every framework.
+<h3 align="center">Best-README-Template</h3>
+
+  <p>
+    ML dashboard for any framework.
+  </p>
+</div>
 
 ## Getting Started
 
