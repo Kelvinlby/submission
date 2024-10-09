@@ -89,13 +89,13 @@ class _FloatingButtonState extends State<FloatingButton> {
       }
 
       // TODO listen in real time instead of get all result together
-      // if(interpreterPath != null && trainerPath != null) {
-      //   final Process process = await Process.start(interpreterPath, []);
-      //   process.stdout.listen((data) {
-      //
-      //     print(String.fromCharCodes(data));
-      //   });
-      // }
+      if(interpreterPath != null && trainerPath != null) {
+        Process.start(interpreterPath, []).then((process) {
+          var str = stdout.addStream(process.stdout);
+          stderr.addStream(process.stderr);
+          process.exitCode.then((code){});
+        });
+      }
 
       setState(() {
         elapsedSeconds = 0;
