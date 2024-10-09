@@ -20,8 +20,13 @@ class _FloatingButtonState extends State<FloatingButton> {
   bool _launched = false;
   Timer? timer;
   int elapsedSeconds = 0;
+  Process? process;
 
   void _stop() {
+    if(process != null) {
+      process!.kill();
+    }
+
     setState(() {
       _launched = !_launched;
     });
@@ -90,11 +95,7 @@ class _FloatingButtonState extends State<FloatingButton> {
 
       // TODO listen in real time instead of get all result together
       if(interpreterPath != null && trainerPath != null) {
-        Process.start(interpreterPath, []).then((process) {
-          var str = stdout.addStream(process.stdout);
-          stderr.addStream(process.stderr);
-          process.exitCode.then((code){});
-        });
+        process = await Process.start(interpreterPath, []);
       }
 
       setState(() {

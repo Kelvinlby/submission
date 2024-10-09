@@ -26,12 +26,8 @@ In order to let Submission connect to your ML project, you need to create a `jso
 ```
 
 ### Logging Training State
+- Install Python Parameter Transmitter
+```shell
+conda install xxxx
+```
 
-Submission is able to receive the content printed to command line in your python script. To let Submission record data, use `print()` function with the following format to let Submission recognize what you want to record.
-
-| Task                 | Format                       |
-| -------------------- | ---------------------------- |
-| Start new job        | `[START_JOB]YourJobName`     |
-| End the previous job | `[END_JOB]YourJobName`       |
-| Add metric           | `[ADD_METRIC]MetricName`     |
-| Record data          | `[MetricName]NumberOnlyData` |
