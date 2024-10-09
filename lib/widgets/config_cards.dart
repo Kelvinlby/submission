@@ -13,13 +13,6 @@ Future<Map<String, dynamic>> _readJson(String path) async {
 }
 
 
-void _saveJson(String path, Map<String, dynamic> data) async {
-  final File file = File(path);
-  final String jsonString = jsonEncode(data);
-  file.writeAsString(jsonString);
-}
-
-
 Future<Widget> _getCardContent(String path, String id) async {
   Map<String, TextEditingController> inputControllers = {};
   Map<String, dynamic> data = await _readJson(path);
