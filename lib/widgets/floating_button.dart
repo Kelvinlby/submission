@@ -88,13 +88,13 @@ class _FloatingButtonState extends State<FloatingButton> {
         configFile.writeAsString(jsonString);
       }
 
-      if(interpreterPath != null && trainerPath != null) {
-        final Process process = await Process.start(interpreterPath, []);
-        process.stdout.listen((data) {
-          // TODO listen in real time instead of get all result together
-          print(String.fromCharCodes(data));
-        });
-      }
+      // if(interpreterPath != null && trainerPath != null) {
+      //   final Process process = await Process.start(interpreterPath, []);
+      //   process.stdout.listen((data) {
+      //     // TODO listen in real time instead of get all result together
+      //     print(String.fromCharCodes(data));
+      //   });
+      // }
 
       setState(() {
         elapsedSeconds = 0;
