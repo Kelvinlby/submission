@@ -45,11 +45,11 @@ class _HomePageState extends State<HomePage> {
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: panel(setState, Theme.of(context).colorScheme.secondaryContainer),
+            child: const Panel(),
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: monitor(setState),
+            child: const Monitor(),
           ),
         ],
       ),

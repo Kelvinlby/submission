@@ -4,9 +4,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:submission/widgets/config_cards.dart';
 
 
-Widget panel(Function setState, Color color) {
-  return FutureBuilder(
-    future: _getPanel(setState, color),
+class Panel extends StatefulWidget {
+  const Panel({super.key});
+
+  @override
+  State<Panel> createState() => _PanelState();
+}
+
+
+class _PanelState extends State<Panel> {
+  @override
+  Widget build(BuildContext context) => FutureBuilder(
+    future: _getPanel(setState),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         return const Text('Loading ...');
@@ -22,7 +31,7 @@ Widget panel(Function setState, Color color) {
 }
 
 
-Future<Widget> _getPanel(Function setState, Color color) async {
+Future<Widget> _getPanel(Function setState) async {
   const int overflowLength = 23;
   const double width = 320.0;
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -155,11 +164,11 @@ Future<Widget> _getPanel(Function setState, Color color) async {
       ),
       const SizedBox(height: 8),
       configPath != null
-          ? Card(color: color, child: ModelConfigCard(path: configPath, width: width))
+          ? Card(child: ModelConfigCard(path: configPath, width: width))
           : const SizedBox(height: 0),
       const SizedBox(height: 8),
       configPath != null
-          ? Card(color: color, child: TrainingConfigCard(path: configPath, width: width))
+          ? Card(child: TrainingConfigCard(path: configPath, width: width))
           : const SizedBox(height: 0),
     ],
   );
@@ -175,7 +184,8 @@ void _pickPath(String id, String extension, Function setState) async {
   );
 
   if(result != null) {
-    prefs.setString(id, result.files.first.path!);
-    setState(() {});
+    setState(() {
+      prefs.setString(id, result.files.first.path!);
+    });
   }
 }
