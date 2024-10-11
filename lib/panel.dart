@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:submission/widgets/config_cards.dart';
+import 'package:submission/widgets/panel/config_cards.dart';
 
 
 class Panel extends StatefulWidget {

@@ -28,16 +28,10 @@ class MyApp extends StatelessWidget {
 }
 
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key, required this.title});
   final String title;
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:submission/widgets/param_setter.dart';
+import 'package:submission/widgets/panel/param_setter.dart';
 import 'package:submission/widgets/floating_button.dart';
 
 
