@@ -93,7 +93,6 @@ class _FloatingButtonState extends State<FloatingButton> {
         configFile.writeAsString(jsonString);
       }
 
-      // TODO listen in real time instead of get all result together
       if(interpreterPath != null && trainerPath != null) {
         process = await Process.start(interpreterPath, []);
       }
