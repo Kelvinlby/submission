@@ -24,6 +24,6 @@ class _TrainInfoCardState extends State<TrainInfoCard> {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('Hello World');
+    return const Text('Train Info Card');
   }
 }

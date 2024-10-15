@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:submission/interfaces/system_info.dart';
+import 'package:submission/interfaces/gpu_monitor.dart';
 
 
 class SystemInfoCard extends StatefulWidget {
@@ -14,10 +14,9 @@ class SystemInfoCard extends StatefulWidget {
 
 class _SystemInfoCardState extends State<SystemInfoCard> {
   Timer? _timer;
-  double _cpuUsage = 0.0;
   double _ramUsage = 0.0;
-  double _gpuUsage = 0.0;
   double _vramUsage = 0.0;
+  double _gpuUsage = 0.0;
 
 
   @override
@@ -25,10 +24,7 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
     super.initState();
     _timer = Timer.periodic(const Duration(milliseconds: 300), (timer) {
       setState(() {
-          _cpuUsage = getCpuUsage();
-          _ramUsage = getRamUsage();
-          _gpuUsage = getGpuUsage();
-          _vramUsage = getVramUsage();
+          // TODO get system info here
       });
     });
   }

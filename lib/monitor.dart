@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:submission/widgets/monitor/system_info.dart';
 
 
 class Monitor extends StatelessWidget {
@@ -10,7 +11,7 @@ class Monitor extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Text('Place holder'),
+            const SystemInfoCard(),
           ],
         ),
         const SizedBox(height: 8),
