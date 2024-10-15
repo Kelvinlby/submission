@@ -15,6 +15,9 @@ class MonitorCard extends StatefulWidget {
 class _MonitorCardState extends State<MonitorCard> {
   Timer? _timer;
   double _cpuUsage = 0.0;
+  double _ramUsage = 0.0;
+  double _gpuUsage = 0.0;
+  double _vramUsage = 0.0;
 
 
   @override
@@ -22,7 +25,10 @@ class _MonitorCardState extends State<MonitorCard> {
     super.initState();
     _timer = Timer.periodic(const Duration(milliseconds: 300), (timer) {
       setState(() {
-          // TODO update UI
+          _cpuUsage = getCpuUsage();
+          _ramUsage = getRamUsage();
+          _gpuUsage = getGpuUsage();
+          _vramUsage = getVramUsage();
       });
     });
   }
