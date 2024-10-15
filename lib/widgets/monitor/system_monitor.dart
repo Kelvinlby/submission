@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:submission/interfaces/system_info.dart';
 
 
 class MonitorCard extends StatefulWidget {
@@ -12,13 +13,14 @@ class MonitorCard extends StatefulWidget {
 
 
 class _MonitorCardState extends State<MonitorCard> {
-  Timer? timer;
-  int elapsedSeconds = 0;
+  Timer? _timer;
+  double _cpuUsage = 0.0;
+
 
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(const Duration(milliseconds: 300), (timer) {
+    _timer = Timer.periodic(const Duration(milliseconds: 300), (timer) {
       setState(() {
           // TODO update UI
       });
@@ -27,7 +29,7 @@ class _MonitorCardState extends State<MonitorCard> {
 
   @override
   void dispose() {
-    timer?.cancel();
+    _timer?.cancel();
     super.dispose();
   }
 

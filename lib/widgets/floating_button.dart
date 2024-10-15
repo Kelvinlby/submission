@@ -18,13 +18,13 @@ class FloatingButton extends StatefulWidget {
 
 class _FloatingButtonState extends State<FloatingButton> {
   bool _launched = false;
-  Timer? timer;
-  int elapsedSeconds = 0;
-  Process? process;
+  Timer? _timer;
+  int _elapsedSeconds = 0;
+  Process? _process;
 
   void _stop() {
-    if(process != null) {
-      process!.kill();
+    if(_process != null) {
+      _process!.kill();
     }
 
     setState(() {
@@ -94,11 +94,11 @@ class _FloatingButtonState extends State<FloatingButton> {
       }
 
       if(interpreterPath != null && trainerPath != null) {
-        process = await Process.start(interpreterPath, []);
+        process = await Process.start(interpreterPath, [trainerPath]);
       }
 
       setState(() {
-        elapsedSeconds = 0;
+        _elapsedSeconds = 0;
         _launched = !_launched;
       });
     }
@@ -115,10 +115,10 @@ class _FloatingButtonState extends State<FloatingButton> {
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_launched) {
         setState(() {
-          elapsedSeconds++;
+          _elapsedSeconds++;
         });
       }
     });
@@ -126,7 +126,7 @@ class _FloatingButtonState extends State<FloatingButton> {
 
   @override
   void dispose() {
-    timer?.cancel();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -136,7 +136,7 @@ class _FloatingButtonState extends State<FloatingButton> {
           onPressed: _stop,
           tooltip: 'Stop',
           label: Text(
-            _formatElapsedTime(elapsedSeconds),
+            _formatElapsedTime(_elapsedSeconds),
             style: const TextStyle(fontFamily: 'JetBrains Mono Bold'),
           ),
           icon: const Icon(Icons.pause),
