@@ -4,15 +4,15 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:submission/interfaces/system_info.dart';
 
 
-class MonitorCard extends StatefulWidget {
-  const MonitorCard({super.key});
+class SystemInfoCard extends StatefulWidget {
+  const SystemInfoCard({super.key});
 
   @override
-  State<MonitorCard> createState() => _MonitorCardState();
+  State<SystemInfoCard> createState() => _SystemInfoCardState();
 }
 
 
-class _MonitorCardState extends State<MonitorCard> {
+class _SystemInfoCardState extends State<SystemInfoCard> {
   Timer? _timer;
   double _cpuUsage = 0.0;
   double _ramUsage = 0.0;
@@ -41,6 +41,6 @@ class _MonitorCardState extends State<MonitorCard> {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('RAM Monitor');
+    return const Text('System Info Monitor');
   }
 }
