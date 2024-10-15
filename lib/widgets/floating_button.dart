@@ -94,7 +94,7 @@ class _FloatingButtonState extends State<FloatingButton> {
       }
 
       if(interpreterPath != null && trainerPath != null) {
-        process = await Process.start(interpreterPath, [trainerPath]);
+        _process = await Process.start(interpreterPath, [trainerPath]);
       }
 
       setState(() {
