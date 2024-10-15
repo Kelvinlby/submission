@@ -9,24 +9,29 @@ typedef DartIntFunction = int Function();
 
 
 class GpuMonitor {
-  static final ffi.DynamicLibrary lib = ffi.DynamicLibrary.open('/mnt/Data/Code/Flutter/submission/lib/interfaces/libGpuMonitor.so');
+  static final ffi.DynamicLibrary _lib = ffi.DynamicLibrary.open('/mnt/Data/Code/Flutter/submission/lib/interfaces/libGpuMonitor.so');
+  int _platformCode = 0;
 
   // CPU
-  DartIntFunction platform = lib.lookup<ffi.NativeFunction<NativeUint8Function>>('getPlatform').asFunction<DartIntFunction>();
-  DartIntFunction totalRam = lib.lookup<ffi.NativeFunction<NativeUint64Function>>('getTotalRam').asFunction<DartIntFunction>();
-  DartIntFunction freeRam = lib.lookup<ffi.NativeFunction<NativeUint64Function>>('getFreeRam').asFunction<DartIntFunction>();
-  DartIntFunction ramUsage = lib.lookup<ffi.NativeFunction<NativeUint8Function>>('getRamUsage').asFunction<DartIntFunction>();
+  final DartIntFunction _platform = _lib.lookup<ffi.NativeFunction<NativeUint8Function>>('getPlatform').asFunction<DartIntFunction>();
+  final DartIntFunction _totalRam = _lib.lookup<ffi.NativeFunction<NativeUint64Function>>('getTotalRam').asFunction<DartIntFunction>();
+  final DartIntFunction _freeRam = _lib.lookup<ffi.NativeFunction<NativeUint64Function>>('getFreeRam').asFunction<DartIntFunction>();
+  final DartIntFunction _ramUsage = _lib.lookup<ffi.NativeFunction<NativeUint8Function>>('getRamUsage').asFunction<DartIntFunction>();
 
   // Nvidia GPU
-  DartIntFunction nvidiaTotalVram = lib.lookup<ffi.NativeFunction<NativeUint64Function>>('nvidiaTotalVram').asFunction<DartIntFunction>();
-  DartIntFunction nvidiaFreeVram = lib.lookup<ffi.NativeFunction<NativeUint64Function>>('nvidiaFreeVram').asFunction<DartIntFunction>();
-  DartIntFunction nvidiaVramUsage = lib.lookup<ffi.NativeFunction<NativeUint8Function>>('nvidiaVramUsage').asFunction<DartIntFunction>();
-  DartIntFunction nvidiaGpuUsage = lib.lookup<ffi.NativeFunction<NativeUint8Function>>('nvidiaGpuUsage').asFunction<DartIntFunction>();
+  final DartIntFunction _nvidiaTotalVram = _lib.lookup<ffi.NativeFunction<NativeUint64Function>>('nvidiaTotalVram').asFunction<DartIntFunction>();
+  final DartIntFunction _nvidiaFreeVram = _lib.lookup<ffi.NativeFunction<NativeUint64Function>>('nvidiaFreeVram').asFunction<DartIntFunction>();
+  final DartIntFunction _nvidiaVramUsage = _lib.lookup<ffi.NativeFunction<NativeUint8Function>>('nvidiaVramUsage').asFunction<DartIntFunction>();
+  final DartIntFunction _nvidiaGpuUsage = _lib.lookup<ffi.NativeFunction<NativeUint8Function>>('nvidiaGpuUsage').asFunction<DartIntFunction>();
 
   // AMD GPU
   /* Waiting for ECHO-HELLO-WORLD */
+  
+  GpuMonitor() {
+    _platformCode = _platform();
+  }
 
-  static double getGun() {
-    return 2.5;
+  double test() {
+    return 1.23;
   }
 }

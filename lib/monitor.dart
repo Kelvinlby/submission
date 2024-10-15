@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:submission/widgets/monitor/system_info.dart';
+import 'package:submission/widgets/monitor/train_info.dart';
 
 
 class Monitor extends StatelessWidget {
@@ -17,7 +18,7 @@ class Monitor extends StatelessWidget {
         const SizedBox(height: 8),
         Row(
           children: [
-            const Text('Place holder'),
+            const TrainInfoCard(),
           ],
         ),
       ],

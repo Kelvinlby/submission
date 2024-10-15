@@ -17,13 +17,14 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
   double _ramUsage = 0.0;
   double _vramUsage = 0.0;
   double _gpuUsage = 0.0;
-
+  final GpuMonitor gpu = GpuMonitor();
 
   @override
   void initState() {
     super.initState();
     _timer = Timer.periodic(const Duration(milliseconds: 300), (timer) {
       setState(() {
+        _ramUsage = gpu.test();
           // TODO get system info here
       });
     });
@@ -37,6 +38,7 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('System Info Monitor');
+    return const Text('Char UI');
+    // TODO build chart UI
   }
 }
