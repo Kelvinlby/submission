@@ -24,6 +24,11 @@ class _TrainInfoCardState extends State<TrainInfoCard> {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('Train Info Card');
+    return Container(
+      height: 256,
+      width: 256,
+      color: Colors.blueGrey,
+      child: Center(child: Text('Train Info Card - Place Holder')),
+    );
   }
 }

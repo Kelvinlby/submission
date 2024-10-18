@@ -71,30 +71,101 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 512,
-      height: 256,
-      child: LineChart(
-        LineChartData(
-          minY: 0,
-          maxY: 1,
-          minX: ramPoints.first.x,
-          maxX: ramPoints.last.x,
-          lineTouchData: const LineTouchData(enabled: false),
-          clipData: const FlClipData.all(),
-          gridData: const FlGridData(
-            show: true,
-            drawVerticalLine: false,
-          ),
-          borderData: FlBorderData(show: false),
-          lineBarsData: [
-            _ramLine(ramPoints),
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return Row(
+          children: [
+            Flexible(
+              flex: 1,
+              child: LayoutBuilder(
+                builder: (_, BoxConstraints constraints) => Container(
+                  width: constraints.maxWidth,
+                  color: Colors.red,
+                  child: const Center(child: Text('Widget 1')),
+                ),
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              child: LayoutBuilder(
+                builder: (_, BoxConstraints constraints) => Container(
+                  width: constraints.maxWidth,
+                  color: Colors.green,
+                  child: const Center(child: Text('Widget 2')),
+                ),
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              child: LayoutBuilder(
+                builder: (_, BoxConstraints constraints) => Container(
+                  width: constraints.maxWidth,
+                  color: Colors.blue,
+                  child: const Center(child: Text('Widget 3')),
+                ),
+              ),
+            ),
+              // child: LineChart(
+              //   LineChartData(
+              //     minY: 0,
+              //     maxY: 1,
+              //     minX: ramPoints.first.x,
+              //     maxX: ramPoints.last.x,
+              //     lineTouchData: const LineTouchData(enabled: false),
+              //     clipData: const FlClipData.all(),
+              //     gridData: const FlGridData(
+              //       show: true,
+              //       drawVerticalLine: false,
+              //     ),
+              //     borderData: FlBorderData(show: false),
+              //     lineBarsData: [
+              //       _ramLine(ramPoints),
+              //     ],
+              //     titlesData: const FlTitlesData(
+              //       show: false,
+              //     ),
+              //   ),
+              // ),
           ],
-          titlesData: const FlTitlesData(
-            show: false,
-          ),
-        )
-      )
+        );
+      }
     );
+    // return Row(
+    //   mainAxisSize: MainAxisSize.max,
+    //   children: [
+    //     Expanded(
+    //       child: Text('a'),
+    //     ),
+    //     Expanded(
+    //       child: Text('b'),
+    //     ),
+    //     Expanded(
+    //       child: Text('c'),
+    //     )
+    //     // Flexible(
+    //     //   child: LineChart(
+    //     //       LineChartData(
+    //     //         minY: 0,
+    //     //         maxY: 1,
+    //     //         minX: ramPoints.first.x,
+    //     //         maxX: ramPoints.last.x,
+    //     //         lineTouchData: const LineTouchData(enabled: false),
+    //     //         clipData: const FlClipData.all(),
+    //     //         gridData: const FlGridData(
+    //     //           show: true,
+    //     //           drawVerticalLine: false,
+    //     //         ),
+    //     //         borderData: FlBorderData(show: false),
+    //     //         lineBarsData: [
+    //     //           _ramLine(ramPoints),
+    //     //         ],
+    //     //         titlesData: const FlTitlesData(
+    //     //           show: false,
+    //     //         ),
+    //     //       )
+    //     //   ),
+    //     // )
+    //   ],
+    // );
   }
 }

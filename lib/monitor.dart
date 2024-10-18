@@ -8,20 +8,21 @@ class Monitor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return Column(
           children: [
-            const SystemInfoCard(),
+            SizedBox(
+              height: constraints.maxHeight * 0.35,
+              child: SystemInfoCard(),
+            ),
+            SizedBox(
+              height: constraints.maxHeight * 0.35,
+              child: TrainInfoCard(),
+            ),
           ],
-        ),
-        const SizedBox(height: 8),
-        Row(
-          children: [
-            const TrainInfoCard(),
-          ],
-        ),
-      ],
+        );
+      }
     );
   }
 }
