@@ -27,6 +27,8 @@ class _FloatingButtonState extends State<FloatingButton> {
       _process!.kill();
     }
 
+    // TODO stop gRPC listening
+
     setState(() {
       _launched = !_launched;
     });
@@ -92,6 +94,8 @@ class _FloatingButtonState extends State<FloatingButton> {
         configFile = File(configPath);
         configFile.writeAsString(jsonString);
       }
+
+      // TODO start listening for gRPC
 
       if(interpreterPath != null && trainerPath != null) {
         _process = await Process.start(interpreterPath, [trainerPath]);

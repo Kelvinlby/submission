@@ -14,18 +14,18 @@ class SystemInfoCard extends StatefulWidget {
 
 class _SystemInfoCardState extends State<SystemInfoCard> {
   Timer? _timer;
-  double _ramUsage = 0.0;
-  double _vramUsage = 0.0;
-  double _gpuUsage = 0.0;
-  final GpuMonitor gpu = GpuMonitor();
+  int sss = 0;
+  Map<String, int> cpuInfo = {'TotalRam': 0, 'UsedRam': 0, 'RamUsage': 0};
+  Map<String, int> gpuInfo = {'GpuUsage': 0, 'TotalVram': 0, 'UsedVram': 0, 'VramUsage': 0};
+  GpuMonitor monitor = GpuMonitor();
 
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(milliseconds: 300), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        _ramUsage = gpu.test();
-          // TODO get system info here
+        cpuInfo = monitor.getCpuInfo();
+        gpuInfo = monitor.getGpuInfo();
       });
     });
   }
@@ -38,7 +38,7 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('Char UI');
+    return Text('${gpuInfo["VramUsage"]}');
     // TODO build chart UI
   }
 }
