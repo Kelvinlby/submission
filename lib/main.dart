@@ -35,17 +35,26 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: const Panel(),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: const Monitor(),
-          ),
-        ],
+      body: SafeArea(
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 16.0,
+                left: 16.0,
+                bottom: 16.0,
+              ),
+              child: Panel(),
+            ),
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Monitor(),
+              ),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: const FloatingButton(),
     );

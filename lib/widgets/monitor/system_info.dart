@@ -75,34 +75,24 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
       builder: (BuildContext context, BoxConstraints constraints) {
         return Row(
           children: [
-            Flexible(
-              flex: 1,
-              child: LayoutBuilder(
-                builder: (_, BoxConstraints constraints) => Container(
-                  width: constraints.maxWidth,
-                  color: Colors.red,
-                  child: const Center(child: Text('Widget 1')),
-                ),
+            Expanded(
+              child: Container(
+                color: Colors.red,
+                child: const Center(child: Text('Widget 1')),
               ),
             ),
-            Flexible(
-              flex: 1,
-              child: LayoutBuilder(
-                builder: (_, BoxConstraints constraints) => Container(
-                  width: constraints.maxWidth,
-                  color: Colors.green,
-                  child: const Center(child: Text('Widget 2')),
-                ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Container(
+                color: Colors.green,
+                child: const Center(child: Text('Widget 2')),
               ),
             ),
-            Flexible(
-              flex: 1,
-              child: LayoutBuilder(
-                builder: (_, BoxConstraints constraints) => Container(
-                  width: constraints.maxWidth,
-                  color: Colors.blue,
-                  child: const Center(child: Text('Widget 3')),
-                ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Container(
+                color: Colors.blue,
+                child: const Center(child: Text('Widget 3')),
               ),
             ),
               // child: LineChart(

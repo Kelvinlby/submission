@@ -13,9 +13,10 @@ class Monitor extends StatelessWidget {
         return Column(
           children: [
             SizedBox(
-              height: constraints.maxHeight * 0.35,
+              height: constraints.maxHeight * 0.23,
               child: SystemInfoCard(),
             ),
+            const SizedBox(height: 16),
             SizedBox(
               height: constraints.maxHeight * 0.35,
               child: TrainInfoCard(),
