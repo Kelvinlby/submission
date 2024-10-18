@@ -30,7 +30,7 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(milliseconds: 40), (timer) {
+    _timer = Timer.periodic(const Duration(milliseconds: 250), (timer) {
       while (ramPoints.length > limitCount) {
         ramPoints.removeAt(0);
         vramPoints.removeAt(0);
@@ -76,9 +76,41 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
         return Row(
           children: [
             Expanded(
-              child: Container(
-                color: Colors.red,
-                child: const Center(child: Text('Widget 1')),
+              child: Card.outlined(
+                child: LineChart(
+                  LineChartData(
+                    titlesData: FlTitlesData(
+                      show: true,
+                      topTitles: AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                        axisNameWidget: Text(
+                          'My Line Chart Title',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                      bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                      rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    ),
+                    minY: 0,
+                    maxY: 1,
+                    minX: ramPoints.first.x,
+                    maxX: ramPoints.last.x,
+                    lineTouchData: const LineTouchData(enabled: false),
+                    clipData: const FlClipData.all(),
+                    gridData: const FlGridData(
+                      show: true,
+                      drawVerticalLine: false,
+                    ),
+                    borderData: FlBorderData(show: false),
+                    lineBarsData: [
+                      _ramLine(ramPoints),
+                    ],
+                  ),
+                ),
               ),
             ),
             const SizedBox(width: 16),
@@ -95,27 +127,6 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                 child: const Center(child: Text('Widget 3')),
               ),
             ),
-              // child: LineChart(
-              //   LineChartData(
-              //     minY: 0,
-              //     maxY: 1,
-              //     minX: ramPoints.first.x,
-              //     maxX: ramPoints.last.x,
-              //     lineTouchData: const LineTouchData(enabled: false),
-              //     clipData: const FlClipData.all(),
-              //     gridData: const FlGridData(
-              //       show: true,
-              //       drawVerticalLine: false,
-              //     ),
-              //     borderData: FlBorderData(show: false),
-              //     lineBarsData: [
-              //       _ramLine(ramPoints),
-              //     ],
-              //     titlesData: const FlTitlesData(
-              //       show: false,
-              //     ),
-              //   ),
-              // ),
           ],
         );
       }
