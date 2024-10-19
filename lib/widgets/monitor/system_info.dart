@@ -68,10 +68,13 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                   borderRadius: BorderRadius.circular(12.0),
                   child: Column(
                     children: [
-                      NumberTitle(
-                        title: 'RAM',
-                        used: '${((_cpuInfo['UsedRam'] ?? 0) / 1024).toStringAsFixed(3)}GB',
-                        total: '${((_cpuInfo['TotalRam'] ?? 0) / 1024).toStringAsFixed(3)}GB',
+                      Container(
+                        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                        child: NumberTitle(
+                          title: 'RAM',
+                          used: '${((_cpuInfo['UsedRam'] ?? 0) / 1024).toStringAsFixed(3)}GB',
+                          total: '${((_cpuInfo['TotalRam'] ?? 0) / 1024).toStringAsFixed(3)}GB',
+                        ),
                       ),
                       Divider(height: 0),
                       Expanded(
@@ -124,10 +127,13 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                 borderRadius: BorderRadius.circular(12.0),
                   child: Column(
                     children: [
-                      NumberTitle(
-                        title: 'VRAM',
-                        used: '${((_gpuInfo['UsedVram'] ?? 0) / 1024).toStringAsFixed(3)}GB',
-                        total: '${((_gpuInfo['TotalVram'] ?? 0) / 1024).toStringAsFixed(3)}GB',
+                      Container(
+                        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                        child: NumberTitle(
+                          title: 'VRAM',
+                          used: '${((_gpuInfo['UsedVram'] ?? 0) / 1024).toStringAsFixed(3)}GB',
+                          total: '${((_gpuInfo['TotalVram'] ?? 0) / 1024).toStringAsFixed(3)}GB',
+                        ),
                       ),
                       Divider(height: 0),
                       Expanded(
@@ -179,9 +185,12 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                 borderRadius: BorderRadius.circular(12.0),
                   child: Column(
                     children: [
-                      PercentTitle(
-                        title: 'GPU',
-                        percent: _gpuInfo['GpuUsage'].toString(),
+                      Container(
+                        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                        child: PercentTitle(
+                          title: 'GPU',
+                          percent: _gpuInfo['GpuUsage'].toString(),
+                        ),
                       ),
                       Divider(height: 0),
                       Expanded(

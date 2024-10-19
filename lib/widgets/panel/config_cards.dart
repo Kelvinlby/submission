@@ -22,10 +22,24 @@ Future<Widget> _getCardContent(String path, String id) async {
   List<Widget> list = [];
 
   if(id == 'model') {
-    list.add(const Text('Model Config'));
+    list.add(const Text(
+        'Model Config',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w800,
+        )
+    ));
+    list.add(const Divider());
   }
   else if(id == 'train') {
-    list.add(const Text('Trainer Config'));
+    list.add(const Text(
+        'Trainer Config',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w800,
+        )
+    ));
+    list.add(const Divider());
   }
 
   for(String param in params) {
