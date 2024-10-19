@@ -24,11 +24,11 @@ class _TrainInfoCardState extends State<TrainInfoCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 256,
-      width: 256,
-      color: Colors.blueGrey,
-      child: Center(child: Text('Train Info Card - Place Holder')),
+    return AspectRatio(
+      aspectRatio: 1.5,
+      child: Card(
+
+      ),
     );
   }
 }

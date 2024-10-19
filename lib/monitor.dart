@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:submission/widgets/monitor/system_info.dart';
-import 'package:submission/widgets/monitor/train_info.dart';
+import 'package:submission/widgets/monitor/train_info_plate.dart';
 
 
 class Monitor extends StatelessWidget {
@@ -17,9 +17,8 @@ class Monitor extends StatelessWidget {
               child: const SystemInfoCard(),
             ),
             const SizedBox(height: 16),
-            SizedBox(
-              height: constraints.maxHeight * 0.35,
-              child: const TrainInfoCard(),
+            Expanded(
+              child: TrainInfoPlate(),
             ),
           ],
         );
