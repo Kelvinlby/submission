@@ -15,15 +15,14 @@ class SystemInfoCard extends StatefulWidget {
 
 class _SystemInfoCardState extends State<SystemInfoCard> {
   Timer? _timer;
-  int sss = 0;
-  Map<String, int> cpuInfo = {'TotalRam': 0, 'UsedRam': 0, 'RamUsage': 0};
-  Map<String, int> gpuInfo = {'GpuUsage': 0, 'TotalVram': 0, 'UsedVram': 0, 'VramUsage': 0};
-  GpuMonitor monitor = GpuMonitor();
+  Map<String, int> _cpuInfo = {'TotalRam': 0, 'UsedRam': 0, 'RamUsage': 0};
+  Map<String, int> _gpuInfo = {'GpuUsage': 0, 'TotalVram': 0, 'UsedVram': 0, 'VramUsage': 0};
+  final GpuMonitor _monitor = GpuMonitor();
 
   // Line chart config
-  double xValue = 0;
-  double step = 0.05;
-  final limitCount = 100;
+  double _xValue = 0;
+  final _step = 0.1;
+  final _limitCount = 100;
   final ramPoints = <FlSpot>[];
   final vramPoints = <FlSpot>[];
   final gpuPoints = <FlSpot>[];
@@ -31,23 +30,23 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
-      while (ramPoints.length > limitCount) {
+    _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
+      while (ramPoints.length > _limitCount) {
         ramPoints.removeAt(0);
         vramPoints.removeAt(0);
         gpuPoints.removeAt(0);
       }
 
       setState(() {
-        cpuInfo = monitor.getCpuInfo();
-        gpuInfo = monitor.getGpuInfo();
+        _cpuInfo = _monitor.getCpuInfo();
+        _gpuInfo = _monitor.getGpuInfo();
 
-        ramPoints.add(FlSpot(xValue, 0.05));// cpuInfo['RamUsage']! / 100));
-        vramPoints.add(FlSpot(xValue, gpuInfo['VramUsage']! / 100));
-        gpuPoints.add(FlSpot(xValue, gpuInfo['GpuUsage']! / 100));
+        ramPoints.add(FlSpot(_xValue, (_cpuInfo['RamUsage'] ?? 0) / 100));
+        vramPoints.add(FlSpot(_xValue, (_gpuInfo['VramUsage'] ?? 0) / 100));
+        gpuPoints.add(FlSpot(_xValue, (_gpuInfo['GpuUsage'] ?? 0) / 100));
       });
 
-      xValue += step;
+      _xValue += _step;
     });
   }
 
@@ -55,45 +54,6 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
   void dispose() {
     _timer?.cancel();
     super.dispose();
-  }
-
-  LineChartBarData _ramLine(List<FlSpot> points) {
-    return LineChartBarData(
-      spots: points,
-      dotData: const FlDotData(show: false),
-      gradient: LinearGradient(
-        colors: [Colors.cyan.withOpacity(0), Colors.cyan],
-        stops: const [0.1, 1.0],
-      ),
-      barWidth: 2,
-      isCurved: false,
-    );
-  }
-
-  LineChartBarData _vramLine(List<FlSpot> points) {
-    return LineChartBarData(
-      spots: points,
-      dotData: const FlDotData(show: false),
-      gradient: LinearGradient(
-        colors: [Colors.orange.withOpacity(0), Colors.orange],
-        stops: const [0.1, 1.0],
-      ),
-      barWidth: 2,
-      isCurved: false,
-    );
-  }
-
-  LineChartBarData _gpuLine(List<FlSpot> points) {
-    return LineChartBarData(
-      spots: points,
-      dotData: const FlDotData(show: false),
-      gradient: LinearGradient(
-        colors: [Colors.pinkAccent.withOpacity(0), Colors.pinkAccent],
-        stops: const [0.1, 1.0],
-      ),
-      barWidth: 2,
-      isCurved: false,
-    );
   }
 
   @override
@@ -108,8 +68,8 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                   children: [
                     NumberTitle(
                       title: 'RAM',
-                      used: '${((cpuInfo['UsedRam'] ?? 0) / 1024).toStringAsFixed(3)}GB',
-                      total: '${((cpuInfo['TotalRam'] ?? 0) / 1024).toStringAsFixed(3)}GB',
+                      used: '${((_cpuInfo['UsedRam'] ?? 0) / 1024).toStringAsFixed(3)}GB',
+                      total: '${((_cpuInfo['TotalRam'] ?? 0) / 1024).toStringAsFixed(3)}GB',
                     ),
                     Divider(),
                     Expanded(
@@ -128,7 +88,24 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                           ),
                           borderData: FlBorderData(show: false),
                           lineBarsData: [
-                            _ramLine(ramPoints),
+                            LineChartBarData(
+                              isStrokeCapRound: true,
+                              spots: ramPoints,
+                              dotData: const FlDotData(show: false),
+                              gradient: LinearGradient(
+                                colors: [Colors.cyan.withOpacity(0), Colors.cyan],
+                                stops: const [0.1, 1.0],
+                              ),
+                              belowBarData: BarAreaData(
+                                show: true,
+                                gradient: LinearGradient(
+                                  colors: [Colors.cyan.withOpacity(0), Colors.cyan.withOpacity(0.3)],
+                                  stops: const [0.1, 1.0],
+                                ),
+                              ),
+                              barWidth: 2,
+                              isCurved: false,
+                            )
                           ],
                         ),
                       ),
@@ -144,8 +121,8 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                   children: [
                     NumberTitle(
                       title: 'VRAM',
-                      used: '${((gpuInfo['UsedVram'] ?? 0) / 1024).toStringAsFixed(3)}GB',
-                      total: '${((gpuInfo['TotalVram'] ?? 0) / 1024).toStringAsFixed(3)}GB',
+                      used: '${((_gpuInfo['UsedVram'] ?? 0) / 1024).toStringAsFixed(3)}GB',
+                      total: '${((_gpuInfo['TotalVram'] ?? 0) / 1024).toStringAsFixed(3)}GB',
                     ),
                     Divider(),
                     Expanded(
@@ -164,7 +141,23 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                           ),
                           borderData: FlBorderData(show: false),
                           lineBarsData: [
-                            _vramLine(vramPoints),
+                            LineChartBarData(
+                              spots: vramPoints,
+                              dotData: const FlDotData(show: false),
+                              gradient: LinearGradient(
+                                colors: [Colors.orange.withOpacity(0), Colors.orange],
+                                stops: const [0.1, 1.0],
+                              ),
+                              belowBarData: BarAreaData(
+                                show: true,
+                                gradient: LinearGradient(
+                                  colors: [Colors.orange.withOpacity(0), Colors.orange.withOpacity(0.3)],
+                                  stops: const [0.1, 1.0],
+                                ),
+                              ),
+                              barWidth: 2,
+                              isCurved: false,
+                            )
                           ],
                         ),
                       ),
@@ -180,7 +173,7 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                   children: [
                     PercentTitle(
                       title: 'GPU',
-                      percent: gpuInfo['GpuUsage'].toString(),
+                      percent: _gpuInfo['GpuUsage'].toString(),
                     ),
                     Divider(),
                     Expanded(
@@ -199,7 +192,23 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                           ),
                           borderData: FlBorderData(show: false),
                           lineBarsData: [
-                            _gpuLine(gpuPoints),
+                            LineChartBarData(
+                              spots: gpuPoints,
+                              dotData: const FlDotData(show: false),
+                              gradient: LinearGradient(
+                                colors: [Colors.pinkAccent.withOpacity(0), Colors.pinkAccent],
+                                stops: const [0.1, 1.0],
+                              ),
+                              belowBarData: BarAreaData(
+                                show: true,
+                                gradient: LinearGradient(
+                                  colors: [Colors.pinkAccent.withOpacity(0), Colors.pinkAccent.withOpacity(0.3)],
+                                  stops: const [0.1, 1.0],
+                                ),
+                              ),
+                              barWidth: 2,
+                              isCurved: false,
+                            ),
                           ],
                         ),
                       ),

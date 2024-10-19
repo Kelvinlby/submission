@@ -37,7 +37,7 @@ class _NumberTitleState extends State<NumberTitle> {
               SizedBox(width: 4),
               Text(
                 '/',
-                style: TextStyle(fontFamily: 'JetBrains Mono'),
+                style: TextStyle(fontFamily: 'JetBrains Mono', color: Colors.grey),
               ),
               SizedBox(width: 4),
               Text(
@@ -76,13 +76,18 @@ class _PercentTitleState extends State<PercentTitle> {
         children: [
           Text(
               widget.title,
-              style: Theme.of(context).textTheme.headlineSmall
+              style: Theme.of(context).textTheme.headlineSmall,
           ),
           Row(
             children: [
               Text(
-                '${widget.percent}%',
+                widget.percent,
                 style: TextStyle(fontFamily: 'JetBrains Mono'),
+              ),
+              SizedBox(width: 4),
+              Text(
+                '%',
+                style: TextStyle(fontFamily: 'JetBrains Mono', color: Colors.grey),
               ),
             ],
           )
