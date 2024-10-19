@@ -95,7 +95,7 @@ class _FloatingButtonState extends State<FloatingButton> {
         configFile.writeAsString(jsonString);
       }
 
-      // TODO start listening for gRPC
+      // TODO start gRPC listening
 
       if(interpreterPath != null && trainerPath != null) {
         _process = await Process.start(interpreterPath, [trainerPath]);

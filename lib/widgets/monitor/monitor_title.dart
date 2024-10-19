@@ -27,7 +27,9 @@ class _NumberTitleState extends State<NumberTitle> {
         children: [
           Text(
             widget.title,
-            style: Theme.of(context).textTheme.headlineSmall
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              fontWeight: FontWeight.w800,
+            )
           ),
           Row(
             children: [
@@ -78,7 +80,9 @@ class _PercentTitleState extends State<PercentTitle> {
         children: [
           Text(
               widget.title,
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                fontWeight: FontWeight.w800,
+              ),
           ),
           Row(
             children: [

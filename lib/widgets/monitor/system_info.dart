@@ -76,11 +76,11 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                           total: '${((_cpuInfo['TotalRam'] ?? 0) / 1024).toStringAsFixed(3)}GB',
                         ),
                       ),
-                      Divider(height: 0),
+                      const Divider(height: 0),
                       Expanded(
                         child: LineChart(
                           LineChartData(
-                            titlesData: FlTitlesData(show: false),
+                            titlesData: const FlTitlesData(show: false),
                             minY: 0,
                             maxY: 1,
                             minX: ramPoints.first.x,
@@ -89,6 +89,7 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                             clipData: const FlClipData.all(),
                             gridData: const FlGridData(
                               show: true,
+                              horizontalInterval: 0.25,
                               drawVerticalLine: false,
                             ),
                             borderData: FlBorderData(show: false),
@@ -135,11 +136,11 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                           total: '${((_gpuInfo['TotalVram'] ?? 0) / 1024).toStringAsFixed(3)}GB',
                         ),
                       ),
-                      Divider(height: 0),
+                      const Divider(height: 0),
                       Expanded(
                         child: LineChart(
                           LineChartData(
-                            titlesData: FlTitlesData(show: false),
+                            titlesData: const FlTitlesData(show: false),
                             minY: 0,
                             maxY: 1,
                             minX: vramPoints.first.x,
@@ -148,6 +149,7 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                             clipData: const FlClipData.all(),
                             gridData: const FlGridData(
                               show: true,
+                              horizontalInterval: 0.25,
                               drawVerticalLine: false,
                             ),
                             borderData: FlBorderData(show: false),
@@ -192,11 +194,11 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                           percent: _gpuInfo['GpuUsage'].toString(),
                         ),
                       ),
-                      Divider(height: 0),
+                      const Divider(height: 0),
                       Expanded(
                         child: LineChart(
                           LineChartData(
-                            titlesData: FlTitlesData(show: false),
+                            titlesData: const FlTitlesData(show: false),
                             minY: 0,
                             maxY: 1,
                             minX: gpuPoints.first.x,
@@ -205,6 +207,7 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                             clipData: const FlClipData.all(),
                             gridData: const FlGridData(
                               show: true,
+                              horizontalInterval: 0.25,
                               drawVerticalLine: false,
                             ),
                             borderData: FlBorderData(show: false),
