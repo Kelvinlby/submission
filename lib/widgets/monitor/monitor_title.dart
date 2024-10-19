@@ -20,6 +20,7 @@ class _NumberTitleState extends State<NumberTitle> {
         top: 8,
         left: 12,
         right: 12,
+        bottom: 8,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -70,6 +71,7 @@ class _PercentTitleState extends State<PercentTitle> {
         top: 8,
         left: 12,
         right: 12,
+        bottom: 8,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
