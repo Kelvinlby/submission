@@ -22,15 +22,14 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.system,
-      home: const HomePage(title: 'Submission'),
+      home: const HomePage(),
     );
   }
 }
 
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key, required this.title});
-  final String title;
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +39,7 @@ class HomePage extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(
-                top: 16.0,
+                top: 20.0,    // More padding for visual balance
                 left: 16.0,
                 bottom: 16.0,
               ),
