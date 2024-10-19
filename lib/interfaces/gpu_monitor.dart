@@ -24,6 +24,10 @@ class GpuMonitor {
   final DartIntFunction _nvidiaGpuUsage  = _lib.lookup<ffi.NativeFunction<NativeUint8Function>>('nvidiaGpuUsage').asFunction<DartIntFunction>();
 
   // AMD GPU
+  final DartIntFunction _amdTotalVram = _lib.lookup<ffi.NativeFunction<NativeUint64Function>>('amdTotalVram').asFunction<DartIntFunction>();
+  final DartIntFunction _amdUsedVram  = _lib.lookup<ffi.NativeFunction<NativeUint64Function>>('amdUsedVram').asFunction<DartIntFunction>();
+  final DartIntFunction _amdVramUsage = _lib.lookup<ffi.NativeFunction<NativeUint8Function>>('amdVramUsage').asFunction<DartIntFunction>();
+  final DartIntFunction _amdGpuUsage  = _lib.lookup<ffi.NativeFunction<NativeUint8Function>>('amdGpuUsage').asFunction<DartIntFunction>();
   
   GpuMonitor() {
     _platformCode = _platform();
@@ -49,10 +53,10 @@ class GpuMonitor {
     }
     else if(_platformCode == 2) {   // AMD GPU
       info = {
-        'GpuUsage': 0,
-        'TotalVram': 0,
-        'UsedVram': 0,
-        'VramUsage': 0
+        'GpuUsage': _amdGpuUsage(),
+        'TotalVram': _amdTotalVram(),
+        'UsedVram': _amdUsedVram(),
+        'VramUsage': _amdVramUsage()
       };
     }
 
