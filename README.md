@@ -27,7 +27,7 @@ In order to let Submission connect to your ML project, you need to create a `jso
 
 ### Logging Training State
 
-- Install Python Parameter Transmitter
+- Install Python client package
 
 ```shell
 conda install xxxx
