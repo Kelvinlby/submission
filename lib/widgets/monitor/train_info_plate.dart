@@ -1,6 +1,7 @@
 import 'dart:async';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:submission/interfaces/transmitter.dart';
+import 'package:submission/widgets/monitor/train_info_card.dart';
 
 
 class TrainInfoPlate extends StatefulWidget {
@@ -12,6 +13,16 @@ class TrainInfoPlate extends StatefulWidget {
 
 
 class _TrainInfoPlateState extends State<TrainInfoPlate> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -69,14 +80,30 @@ class _TrainInfoPlateState extends State<TrainInfoPlate> {
   }
 
   Future<Widget> _getPlate() async {
-    Transmitter.getSetState(setState);
-    List<Widget> cards = Transmitter.getWidgets();
+    List<Widget> cards = [
+      TrainInfoCard(
+        title: 'title',
+        data: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(3, 2), FlSpot(4, 4)],
+      ),
+      TrainInfoCard(
+        title: 'title',
+        data: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(3, 2), FlSpot(4, 4)],
+      ),
+      TrainInfoCard(
+        title: 'title',
+        data: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(3, 2), FlSpot(4, 4)],
+      ),
+      TrainInfoCard(
+        title: 'title',
+        data: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(3, 2), FlSpot(4, 4)],
+      )
+    ];
 
     return GridView.count(
       primary: false,
       crossAxisSpacing: 8,
       mainAxisSpacing: 8,
-      crossAxisCount: cards.length > 4 ? 4: cards.isEmpty ? 1 : cards.length,
+      crossAxisCount: cards.length > 4 ? 4 : (cards.isEmpty ? 1 : cards.length),
       children: cards,
     );
   }

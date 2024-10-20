@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:core';
-import 'package:submission/interfaces/transmitter.dart';
 
 
 class Server {
@@ -10,8 +9,6 @@ class Server {
     // TODO launch gRPC server here
     print('Server Launched!');
     _launched = true;
-
-    _listen().then((code) {});
   }
 
   static void stop() {
@@ -20,16 +17,17 @@ class Server {
     _launched = false;
   }
 
-  static bool getLaunchState() {
-    return _launched;
-  }
+  static bool getLaunchState() => _launched;
 
-  static Future<int> _listen() async {
-    while(_launched) {
-      print('Server Listening!');
-      // TODO receive data
-      sleep(Duration(seconds:1));
-      Transmitter.addCommand('cmd');
+  static Future<String?> listen() async {
+    if(!_launched) {
+      return null;
     }
+
+    print('Server Listening!');
+    // TODO receive data
+    sleep(Duration(seconds:1));
+
+    return 'data';
   }
 }

@@ -139,18 +139,18 @@ class _FloatingButtonState extends State<FloatingButton> {
 
   @override
   Widget build(BuildContext context) => _launched
-      ? FloatingActionButton.extended(
-          onPressed: _stop,
-          tooltip: 'Stop',
-          label: Text(
-            _formatElapsedTime(_elapsedSeconds),
-            style: const TextStyle(fontFamily: 'JetBrains Mono Bold'),
-          ),
-          icon: const Icon(Icons.pause),
-        )
-      : FloatingActionButton(
-          onPressed: _launch,
-          tooltip: 'Launch',
-          child: const Icon(Icons.play_arrow),
-        );
+    ? FloatingActionButton.extended(
+        onPressed: _stop,
+        tooltip: 'Stop',
+        label: Text(
+          _formatElapsedTime(_elapsedSeconds),
+          style: const TextStyle(fontFamily: 'JetBrains Mono Bold'),
+        ),
+        icon: const Icon(Icons.pause),
+      )
+    : FloatingActionButton(
+        onPressed: _launch,
+        tooltip: 'Launch',
+        child: const Icon(Icons.play_arrow),
+      );
 }

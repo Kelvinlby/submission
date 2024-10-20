@@ -68,13 +68,10 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                   borderRadius: BorderRadius.circular(12.0),
                   child: Column(
                     children: [
-                      Container(
-                        color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                        child: NumberTitle(
-                          title: 'RAM',
-                          used: '${((_cpuInfo['UsedRam'] ?? 0) / 1024).toStringAsFixed(3)}GB',
-                          total: '${((_cpuInfo['TotalRam'] ?? 0) / 1024).toStringAsFixed(3)}GB',
-                        ),
+                      NumberTitle(
+                        title: 'RAM',
+                        used: '${((_cpuInfo['UsedRam'] ?? 0) / 1024).toStringAsFixed(3)}GB',
+                        total: '${((_cpuInfo['TotalRam'] ?? 0) / 1024).toStringAsFixed(3)}GB',
                       ),
                       const Divider(height: 0),
                       Expanded(
@@ -128,13 +125,10 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                 borderRadius: BorderRadius.circular(12.0),
                   child: Column(
                     children: [
-                      Container(
-                        color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                        child: NumberTitle(
-                          title: 'VRAM',
-                          used: '${((_gpuInfo['UsedVram'] ?? 0) / 1024).toStringAsFixed(3)}GB',
-                          total: '${((_gpuInfo['TotalVram'] ?? 0) / 1024).toStringAsFixed(3)}GB',
-                        ),
+                      NumberTitle(
+                        title: 'VRAM',
+                        used: '${((_gpuInfo['UsedVram'] ?? 0) / 1024).toStringAsFixed(3)}GB',
+                        total: '${((_gpuInfo['TotalVram'] ?? 0) / 1024).toStringAsFixed(3)}GB',
                       ),
                       const Divider(height: 0),
                       Expanded(
@@ -187,12 +181,9 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                 borderRadius: BorderRadius.circular(12.0),
                   child: Column(
                     children: [
-                      Container(
-                        color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                        child: PercentTitle(
-                          title: 'GPU',
-                          percent: _gpuInfo['GpuUsage'].toString(),
-                        ),
+                      PercentTitle(
+                        title: 'GPU',
+                        percent: _gpuInfo['GpuUsage'].toString(),
                       ),
                       const Divider(height: 0),
                       Expanded(
