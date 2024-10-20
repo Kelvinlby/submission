@@ -8,7 +8,7 @@ typedef DartIntFunction = int Function();
 
 
 class GpuMonitor {
-  static final ffi.DynamicLibrary _lib = ffi.DynamicLibrary.open('/mnt/Data/Code/Flutter/submission/lib/interfaces/libGpuMonitor.so');
+  static final ffi.DynamicLibrary _lib = ffi.DynamicLibrary.open('/mnt/Data/Code/Flutter/submission/dependency/libGpuMonitor.so');
   int _platformCode = 0;
 
   // CPU
