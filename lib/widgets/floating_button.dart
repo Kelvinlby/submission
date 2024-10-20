@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:submission/interfaces/server.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -23,14 +24,14 @@ class _FloatingButtonState extends State<FloatingButton> {
   Process? _process;
 
   void _stop() {
-    if(_process != null) {
-      _process!.kill();
+    _process?.kill();
+
+    if(Server.getLaunchState()) {
+      Server.stop();
     }
 
-    // TODO stop gRPC listening
-
     setState(() {
-      _launched = !_launched;
+      _launched = false;
     });
   }
 
@@ -95,15 +96,17 @@ class _FloatingButtonState extends State<FloatingButton> {
         configFile.writeAsString(jsonString);
       }
 
-      // TODO start gRPC listening
-
       if(interpreterPath != null && trainerPath != null) {
+        Server.launch();
         _process = await Process.start(interpreterPath, [trainerPath]);
+        _process?.exitCode.then((code) {    // Process ends by itself
+          _stop();
+        });
       }
 
       setState(() {
         _elapsedSeconds = 0;
-        _launched = !_launched;
+        _launched = true;
       });
     }
   }

@@ -26,9 +26,7 @@ class _TrainInfoCardState extends State<TrainInfoCard> {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 1.5,
-      child: Card(
-
-      ),
+      child: Card(),
     );
   }
 }
