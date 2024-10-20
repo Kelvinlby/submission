@@ -70,10 +70,20 @@ class _TrainInfoCardState extends State<TrainInfoCard> {
                       LineChartBarData(
                         spots: widget.data,
                         isStrokeCapRound: true,
-                        dotData: const FlDotData(show: true),
+                        dotData: FlDotData(
+                          show: true,
+                          getDotPainter: (spot, percent, barData, index) {
+                            return FlDotCirclePainter(
+                              radius: 4,
+                              color: color,
+                              strokeWidth: 2,
+                              strokeColor: color.withOpacity(0.5),
+                            );
+                          }
+                        ),
                         color: color,
                         belowBarData: BarAreaData(show: false),
-                        barWidth: 2,
+                        barWidth: 4,
                         isCurved: false,
                       ),
                     ],

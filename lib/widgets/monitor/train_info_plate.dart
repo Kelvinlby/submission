@@ -24,62 +24,62 @@ class _TrainInfoPlateState extends State<TrainInfoPlate> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _getPlate(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: Column(
-              children: [
-                Icon(
-                  Icons.data_thresholding_outlined,
-                  size: 192,
+  Widget build(BuildContext context) => FutureBuilder(
+    future: _getPlate(),
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return Center(
+          child: Column(
+            children: [
+              Icon(
+                Icons.data_thresholding_outlined,
+                size: 192,
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                weight: 200,
+              ),
+              Text(
+                'No Data',
+                style: TextStyle(
                   color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  weight: 200,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 96,
                 ),
-                Text(
-                  'No Data',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 96,
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
-        else if (snapshot.hasError) {
-          return Center(
-            child: Column(
-              children: [
-                Icon(
-                  Icons.error_outline,
-                  size: 192,
+              ),
+            ],
+          ),
+        );
+      }
+      else if (snapshot.hasError) {
+        return Center(
+          child: Column(
+            children: [
+              Icon(
+                Icons.error_outline,
+                size: 192,
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                weight: 200,
+              ),
+              Text(
+                'Error: ${snapshot.error}',
+                style: TextStyle(
                   color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  weight: 200,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16,
                 ),
-                Text(
-                  'Error: ${snapshot.error}',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16,
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
-        else {
-          return snapshot.data!;
-        }
-      },
-    );
-  }
+              ),
+            ],
+          ),
+        );
+      }
+      else {
+        return snapshot.data!;
+      }
+    },
+  );
 
   Future<Widget> _getPlate() async {
+    final int maxColumnCount = 4;
+
     List<Widget> cards = [
       TrainInfoCard(
         title: 'title',
@@ -95,7 +95,7 @@ class _TrainInfoPlateState extends State<TrainInfoPlate> {
       ),
       TrainInfoCard(
         title: 'title',
-        data: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(3, 2), FlSpot(4, 4)],
+        data: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(3, 2), FlSpot(4, 3), FlSpot(5, 4)],
       )
     ];
 
@@ -103,7 +103,7 @@ class _TrainInfoPlateState extends State<TrainInfoPlate> {
       primary: false,
       crossAxisSpacing: 8,
       mainAxisSpacing: 8,
-      crossAxisCount: cards.length > 4 ? 4 : (cards.isEmpty ? 1 : cards.length),
+      crossAxisCount: cards.length > maxColumnCount ? maxColumnCount : (cards.isEmpty ? 1 : cards.length),
       children: cards,
     );
   }
