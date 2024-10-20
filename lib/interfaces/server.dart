@@ -24,7 +24,7 @@ class Server {
     return _launched;
   }
 
-  static Future<void> _listen() async {
+  static Future<int> _listen() async {
     while(_launched) {
       print('Server Listening!');
       // TODO receive data
