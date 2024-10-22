@@ -97,7 +97,7 @@ class _FloatingButtonState extends State<FloatingButton> {
       }
 
       if(interpreterPath != null && trainerPath != null) {
-        Server.launch();
+        await Server.launch();
         _process = await Process.start(interpreterPath, [trainerPath]);
         _process?.exitCode.then((code) {    // Process ends by itself
           _stop();

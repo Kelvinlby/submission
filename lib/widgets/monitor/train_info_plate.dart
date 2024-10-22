@@ -13,13 +13,22 @@ class TrainInfoPlate extends StatefulWidget {
 
 
 class _TrainInfoPlateState extends State<TrainInfoPlate> {
+  Widget? _cache;
+  Timer? _timer;
+
   @override
   void initState() {
     super.initState();
+    _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
+      // setState(() {
+      //   ;
+      // });
+    });
   }
 
   @override
   void dispose() {
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -28,7 +37,7 @@ class _TrainInfoPlateState extends State<TrainInfoPlate> {
     future: _getPlate(),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return Center(
+        return _cache ?? Center(
           child: Column(
             children: [
               Icon(
@@ -72,6 +81,7 @@ class _TrainInfoPlateState extends State<TrainInfoPlate> {
         );
       }
       else {
+        _cache = snapshot.data;
         return snapshot.data!;
       }
     },

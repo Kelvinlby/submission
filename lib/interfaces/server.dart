@@ -5,14 +5,14 @@ import 'dart:core';
 class Server {
   static bool _launched = false;
 
-  static void launch() async {
-    // TODO launch gRPC server here
+  static Future<void> launch() async {
+    // TODO launch server
     print('Server Launched!');
     _launched = true;
   }
 
-  static void stop() {
-    // TODO stop gRPC server here
+  static Future<void> stop() async {
+    // TODO stop server
     print('Server Stopped!');
     _launched = false;
   }
