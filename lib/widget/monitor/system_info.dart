@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:submission/interfaces/gpu_monitor.dart';
-import 'package:submission/widgets/monitor/monitor_title.dart';
+import 'package:submission/interface/gpu_monitor.dart';
+import 'package:submission/widget/monitor/monitor_title.dart';
 
 
 class SystemInfoCard extends StatefulWidget {
@@ -20,33 +20,32 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
   final GpuMonitor _monitor = GpuMonitor();
 
   // Line chart config
-  double _xValue = 0;
-  final _step = 0.1;
-  final _limitCount = 100;
-  final ramPoints = <FlSpot>[];
-  final vramPoints = <FlSpot>[];
-  final gpuPoints = <FlSpot>[];
+  final _limitCount = 75;
+  final ramPoints = <FlSpot>[FlSpot(0, 0)];
+  final vramPoints = <FlSpot>[FlSpot(0, 0)];
+  final gpuPoints = <FlSpot>[FlSpot(0, 0)];
 
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
+    _timer = Timer.periodic(const Duration(milliseconds: 150), (timer) {  // Do not change the duration below 150, or the line will shake.
       while (ramPoints.length > _limitCount) {
         ramPoints.removeAt(0);
         vramPoints.removeAt(0);
         gpuPoints.removeAt(0);
       }
 
-      setState(() {
-        _cpuInfo = _monitor.getCpuInfo();
-        _gpuInfo = _monitor.getGpuInfo();
+      _cpuInfo = _monitor.getCpuInfo();
+      _gpuInfo = _monitor.getGpuInfo();
 
-        ramPoints.add(FlSpot(_xValue, (_cpuInfo['RamUsage'] ?? 0) / 100));
-        vramPoints.add(FlSpot(_xValue, (_gpuInfo['VramUsage'] ?? 0) / 100));
-        gpuPoints.add(FlSpot(_xValue, (_gpuInfo['GpuUsage'] ?? 0) / 100));
+      setState(() {
+        ramPoints.add(FlSpot(ramPoints.last.x + 0.0000001, (_cpuInfo['RamUsage'] ?? 0) / 100));
+        vramPoints.add(FlSpot(vramPoints.last.x + 0.0000001, (_gpuInfo['VramUsage'] ?? 0) / 100));
+        gpuPoints.add(FlSpot(gpuPoints.last.x + 0.0000001, (_gpuInfo['GpuUsage'] ?? 0) / 100));
       });
 
-      _xValue += _step;
+      // _xValue += _step;
+      // print(_xValue);
     });
   }
 
@@ -107,7 +106,7 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                                   ),
                                 ),
                                 barWidth: 2,
-                                isCurved: false,
+                                isCurved: true,
                               )
                             ],
                           ),
@@ -163,7 +162,7 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                                   ),
                                 ),
                                 barWidth: 2,
-                                isCurved: false,
+                                isCurved: true,
                               )
                             ],
                           ),
@@ -218,7 +217,7 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                                   ),
                                 ),
                                 barWidth: 2,
-                                isCurved: false,
+                                isCurved: true,
                               ),
                             ],
                           ),

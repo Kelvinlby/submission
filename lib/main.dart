@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:submission/panel.dart';
 import 'package:submission/monitor.dart';
-import 'package:submission/widgets/floating_button.dart';
+import 'package:submission/widget/floating_button.dart';
 
 
 void main() {

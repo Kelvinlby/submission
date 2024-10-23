@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:submission/widgets/monitor/monitor_title.dart';
+import 'package:submission/widget/monitor/monitor_title.dart';
 
 
 class TrainInfoCard extends StatefulWidget {
