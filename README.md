@@ -10,7 +10,7 @@
 
 ### Configuring Adjustable Parameters
 
-In order to let Submission connect to your ML project, you need to create a `json` file to store all the parameters you'd like Submission to adjust. The `json` file must contain two keywords: `model` and `train` , in which you should store related parameters. Here is an example:
+In order to adjust parameters directly in `Submission` , you need to create a `json` file to store all the parameters you'd like Submission to adjust and select it in `Config` field in the left panel. The `json` file must contain two keywords: `model` and `train` , in which you should store related parameters. Here is an example:
 
 ```json5
 {
@@ -30,6 +30,18 @@ In order to let Submission connect to your ML project, you need to create a `jso
 - Install Python client package
 
 ```shell
-conda install xxxx
+conda install submission-client
+```
+- Import and initialize
+```python
+import submission-client as submission
+```
+- Add a metric to be logged in `Submission`
+```python
+submission.add_metric('YOUR_METRIC_NAME')
+```
+- log the value of your metric
+```python
+submission.log('YOUR_METRIC_NAME', 0.998)
 ```
 
