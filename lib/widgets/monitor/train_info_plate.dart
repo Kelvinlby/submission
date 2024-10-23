@@ -13,16 +13,52 @@ class TrainInfoPlate extends StatefulWidget {
 
 
 class _TrainInfoPlateState extends State<TrainInfoPlate> {
-  Widget? _cache;
+  Widget? _widgetCache;
   Timer? _timer;
+  final List<Widget> _cards = [];
+  final List<String> _flow = [];
+
+  void _widgetGenerator(Map<String, String> message) {
+    _cards.addAll([
+      TrainInfoCard(
+        title: 'title',
+        data: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(3, 2), FlSpot(4, 4)],
+      ),
+      TrainInfoCard(
+        title: 'title',
+        data: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(3, 2), FlSpot(4, 4)],
+      ),
+      TrainInfoCard(
+        title: 'title',
+        data: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(3, 2), FlSpot(4, 4)],
+      ),
+      TrainInfoCard(
+        title: 'title',
+        data: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(3, 2), FlSpot(4, 3), FlSpot(5, 4)],
+      )
+    ]);
+    _flow.clear();
+  }
+
+  Future<Widget> _getPlate() async {
+    final int maxColumnCount = 4;
+
+    return GridView.count(
+      primary: false,
+      crossAxisSpacing: 8,
+      mainAxisSpacing: 8,
+      crossAxisCount: _cards.length > maxColumnCount ? maxColumnCount : (_cards.isEmpty ? 1 : _cards.length),
+      children: _cards,
+    );
+  }
 
   @override
   void initState() {
     super.initState();
     _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
-      // setState(() {
-      //   ;
-      // });
+      setState(() {
+        ;
+      });
     });
   }
 
@@ -37,7 +73,7 @@ class _TrainInfoPlateState extends State<TrainInfoPlate> {
     future: _getPlate(),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return _cache ?? Center(
+        return _widgetCache ?? Center(
           child: Column(
             children: [
               Icon(
@@ -81,40 +117,9 @@ class _TrainInfoPlateState extends State<TrainInfoPlate> {
         );
       }
       else {
-        _cache = snapshot.data;
+        _widgetCache = snapshot.data;
         return snapshot.data!;
       }
     },
   );
-
-  Future<Widget> _getPlate() async {
-    final int maxColumnCount = 4;
-
-    List<Widget> cards = [
-      TrainInfoCard(
-        title: 'title',
-        data: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(3, 2), FlSpot(4, 4)],
-      ),
-      TrainInfoCard(
-        title: 'title',
-        data: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(3, 2), FlSpot(4, 4)],
-      ),
-      TrainInfoCard(
-        title: 'title',
-        data: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(3, 2), FlSpot(4, 4)],
-      ),
-      TrainInfoCard(
-        title: 'title',
-        data: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(3, 2), FlSpot(4, 3), FlSpot(5, 4)],
-      )
-    ];
-
-    return GridView.count(
-      primary: false,
-      crossAxisSpacing: 8,
-      mainAxisSpacing: 8,
-      crossAxisCount: cards.length > maxColumnCount ? maxColumnCount : (cards.isEmpty ? 1 : cards.length),
-      children: cards,
-    );
-  }
 }

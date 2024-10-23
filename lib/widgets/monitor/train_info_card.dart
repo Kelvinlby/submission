@@ -15,21 +15,23 @@ class TrainInfoCard extends StatefulWidget {
 
 
 class _TrainInfoCardState extends State<TrainInfoCard> {
-  final List<Color> lineColors = [
+  final List<Color> _lineColors = [
     Colors.pinkAccent,
-    Colors.orange,
+    Colors.orangeAccent,
     Colors.amberAccent,
     Colors.tealAccent,
     Colors.blueAccent,
     Colors.deepPurpleAccent,
   ];
 
-  late Color color;
+  Color? _color;
 
   @override
   void initState() {
-    Random random = Random();
-    color = lineColors[random.nextInt(lineColors.length)];
+    if(_color == null) {
+      Random random = Random();
+      _color = _lineColors[random.nextInt(_lineColors.length)];
+    }
     super.initState();
   }
 
@@ -75,13 +77,13 @@ class _TrainInfoCardState extends State<TrainInfoCard> {
                           getDotPainter: (spot, percent, barData, index) {
                             return FlDotCirclePainter(
                               radius: 4,
-                              color: color,
+                              color: _color ?? _lineColors.first,
                               strokeWidth: 2,
-                              strokeColor: color.withOpacity(0.5),
+                              strokeColor: (_color ?? _lineColors.first).withOpacity(0.5),
                             );
                           }
                         ),
-                        color: color,
+                        color: _color ?? _lineColors.first,
                         belowBarData: BarAreaData(show: false),
                         barWidth: 4,
                         isCurved: false,
