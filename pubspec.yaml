@@ -38,6 +38,8 @@ dependencies:
   file_picker: ^8.1.2
   shared_preferences: ^2.3.2
   fl_chart: ^0.69.0
+  grpc: ^4.0.1
+  protobuf: ^3.1.0
 
 dev_dependencies:
   flutter_test:
@@ -92,3 +94,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+linux:
+  dependencies:
+    gpu_monitor:
+      path: dependency/libGpuMonitor.so

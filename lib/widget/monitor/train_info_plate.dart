@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:submission/widgets/monitor/train_info_card.dart';
+import 'package:submission/widget/monitor/train_info_card.dart';
 
 
 class TrainInfoPlate extends StatefulWidget {

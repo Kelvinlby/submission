@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:submission/widgets/monitor/system_info.dart';
-import 'package:submission/widgets/monitor/train_info_plate.dart';
+import 'package:submission/widget/monitor/system_info.dart';
+import 'package:submission/widget/monitor/train_info_plate.dart';
 
 
 class Monitor extends StatelessWidget {
