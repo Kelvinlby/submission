@@ -18,7 +18,8 @@ class _TrainInfoPlateState extends State<TrainInfoPlate> {
   final List<Widget> _cards = [];
   final List<String> _flow = [];
 
-  void _widgetGenerator(Map<String, String> message) {
+  void _widgetGenerator(List<Map<String, dynamic>>? message) {
+    _cards.clear();
     _cards.addAll([
       TrainInfoCard(
         title: 'title',
@@ -57,7 +58,7 @@ class _TrainInfoPlateState extends State<TrainInfoPlate> {
     super.initState();
     _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       setState(() {
-        ;
+        _widgetGenerator(null);
       });
     });
   }

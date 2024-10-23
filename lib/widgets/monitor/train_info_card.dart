@@ -37,6 +37,18 @@ class _TrainInfoCardState extends State<TrainInfoCard> {
 
   @override
   Widget build(BuildContext context) {
+    double minX = widget.data.map((spot) => spot.x).reduce(min);
+    double maxX = widget.data.map((spot) => spot.x).reduce(max);
+    double minY = widget.data.map((spot) => spot.y).reduce(min);
+    double maxY = widget.data.map((spot) => spot.y).reduce(max);
+
+    double xRange = maxX - minX;
+    double yRange = maxY - minY;
+
+    // Add padding (10% of the range on each side)
+    double horizontalPadding = xRange * 0.1;
+    double verticalPadding = yRange * 0.1;
+
     return Card(
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12.0),
@@ -49,17 +61,68 @@ class _TrainInfoCardState extends State<TrainInfoCard> {
             const Divider(height: 0),
             Expanded(
               child: Padding(
-                padding: EdgeInsets.only(
-                  top: 28,
-                  right: 24,
-                  bottom: 16,
-                ),
+                padding: EdgeInsets.all(16),
                 child: LineChart(
                   LineChartData(
-                    titlesData: const FlTitlesData(
+                    minX: minX - horizontalPadding,
+                    maxX: maxX + horizontalPadding,
+                    minY: minY - verticalPadding,
+                    maxY: maxY + verticalPadding,
+                    titlesData: FlTitlesData(
                       show: true,
-                      topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                      rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                      topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                      rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                      bottomTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          interval: 1,
+                          showTitles: true,
+                          getTitlesWidget: (value, meta) {
+                            if (value < minX || value > maxX) {
+                              return const SizedBox.shrink();
+                            }
+
+                            return Text(
+                              value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 1),
+                              style: TextStyle(
+                                fontFamily: 'JetBrains Mono'
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      leftTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          reservedSize: 32,
+                          showTitles: true,
+                          getTitlesWidget: (value, meta) {
+                            // Only show titles for actual data points range
+                            if (value < minY || value > maxY) {
+                              return const SizedBox.shrink();
+                            }
+
+                            return value.truncateToDouble() != value
+                              ? Text(
+                                  value.toStringAsFixed(1),
+                                  style: TextStyle(fontFamily: 'JetBrains Mono'),
+                                )
+                              : Row(
+                                  children: [
+                                    Text(
+                                      value.toStringAsFixed(0),
+                                      style: TextStyle(fontFamily: 'JetBrains Mono'),
+                                    ),
+                                    const Text(
+                                      '.0',
+                                      style: TextStyle(
+                                        fontFamily: 'JetBrains Mono',
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                );
+                          },
+                        ),
+                      ),
                     ),
                     lineTouchData: const LineTouchData(enabled: true),
                     clipData: const FlClipData.all(),
@@ -78,8 +141,8 @@ class _TrainInfoCardState extends State<TrainInfoCard> {
                             return FlDotCirclePainter(
                               radius: 4,
                               color: _color ?? _lineColors.first,
-                              strokeWidth: 2,
-                              strokeColor: (_color ?? _lineColors.first).withOpacity(0.5),
+                              strokeWidth: 3,
+                              strokeColor: (_color ?? _lineColors.first).withOpacity(0.35),
                             );
                           }
                         ),

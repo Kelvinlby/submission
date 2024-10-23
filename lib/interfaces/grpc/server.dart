@@ -18,16 +18,4 @@ class Server {
   }
 
   static bool getLaunchState() => _launched;
-
-  static Future<String?> listen() async {
-    if(!_launched) {
-      return null;
-    }
-
-    print('Server Listening!');
-    // TODO receive data
-    sleep(Duration(seconds:1));
-
-    return 'data';
-  }
 }
