@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:core';
 
 
-class Server {
+class ServerManager {
   static bool _launched = false;
 
   static Future<void> launch() async {

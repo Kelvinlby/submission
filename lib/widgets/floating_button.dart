@@ -26,8 +26,8 @@ class _FloatingButtonState extends State<FloatingButton> {
   void _stop() {
     _process?.kill();
 
-    if(Server.getLaunchState()) {
-      Server.stop();
+    if(ServerManager.getLaunchState()) {
+      ServerManager.stop();
     }
 
     setState(() {
@@ -97,7 +97,7 @@ class _FloatingButtonState extends State<FloatingButton> {
       }
 
       if(interpreterPath != null && trainerPath != null) {
-        await Server.launch();
+        await ServerManager.launch();
         _process = await Process.start(interpreterPath, [trainerPath]);
         _process?.exitCode.then((code) {    // Process ends by itself
           _stop();
