@@ -10,8 +10,7 @@ class Record extends RecordServiceBase {
   bool _isReady = false;
 
   @override
-  Future<ReturnData> listenData(grpc.ServiceCall call,
-      Stream<MessageData> request) async {
+  Future<ReturnData> listenData(grpc.ServiceCall call, Stream<MessageData> request) async {
     if (_isReady) {
       try {
         await for (var message in request) {
@@ -41,17 +40,19 @@ class Record extends RecordServiceBase {
       ..p = 1;
   }
 
-  List<dynamic>? getMessageAndClear() {
+  List<Map<String, dynamic>>? getMessageAndClear() {
     if (_isReady) {
       _isReady = false;
 
-      final List<dynamic> listbuff = messageBuff;
+      final List<Map<String, dynamic>> buff = messageBuff;
       messageBuff.clear();
+
       sleep(Duration(milliseconds: 10));
 
       _isReady = true;
-      return listbuff;
-    } else {
+      return buff;
+    }
+    else {
       return null;
     }
   }

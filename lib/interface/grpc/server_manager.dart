@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:core';
-import 'serverFunc.dart';
+import 'server_runner.dart';
 import 'package:grpc/grpc.dart' as grpc;
 
 
