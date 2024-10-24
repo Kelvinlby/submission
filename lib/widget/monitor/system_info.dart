@@ -43,9 +43,6 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
         vramPoints.add(FlSpot(vramPoints.last.x + 0.0000001, (_gpuInfo['VramUsage'] ?? 0) / 100));
         gpuPoints.add(FlSpot(gpuPoints.last.x + 0.0000001, (_gpuInfo['GpuUsage'] ?? 0) / 100));
       });
-
-      // _xValue += _step;
-      // print(_xValue);
     });
   }
 

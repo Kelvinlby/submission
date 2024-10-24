@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:submission/interface/grpc/server.dart';
+import 'package:submission/interface/grpc/server_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
