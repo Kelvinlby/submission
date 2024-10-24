@@ -15,9 +15,9 @@ import 'dart:core' as $core;
 import 'package:grpc/service_api.dart' as $grpc;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'commuincation.pb.dart' as $0;
+import 'communication.pb.dart' as $0;
 
-export 'commuincation.pb.dart';
+export 'communication.pb.dart';
 
 @$pb.GrpcServiceName('communication.Record')
 class RecordClient extends $grpc.Client {

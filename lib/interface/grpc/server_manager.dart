@@ -19,7 +19,7 @@ class ServerManager {
         _launched = false;
         throw('Port 50051 already occupied!');
       } else {
-        throw(e);
+        rethrow;
       }
     }
   }

@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:grpc/grpc.dart' as grpc;
-import './generated/commuincation.pbgrpc.dart';
+import './generated/communication.pbgrpc.dart';
 
 
 class Record extends RecordServiceBase {
   int callCount = 0;
-  List<Map<String, dynamic>> messageBuff = [];
+  final List<Map<String, dynamic>> _messageBuff = [];
   bool _isReady = false;
 
   @override
@@ -15,7 +15,7 @@ class Record extends RecordServiceBase {
       try {
         await for (var message in request) {
           _isReady = false;
-          messageBuff.add(
+          _messageBuff.add(
             {
               'command': message.command,
               'name': message.name,
@@ -44,8 +44,8 @@ class Record extends RecordServiceBase {
     if (_isReady) {
       _isReady = false;
 
-      final List<Map<String, dynamic>> buff = messageBuff;
-      messageBuff.clear();
+      final List<Map<String, dynamic>> buff = _messageBuff;
+      _messageBuff.clear();
 
       sleep(Duration(milliseconds: 10));
 
