@@ -16,40 +16,35 @@ class TrainInfoPlate extends StatefulWidget {
 class _TrainInfoPlateState extends State<TrainInfoPlate> {
   Widget? _widgetCache;
   Timer? _timer;
-  final List<Widget> _cards = [];
-  final List<String> _flow = [];
+  final List<TrainInfoCard> _cards = [];
 
   void _widgetGenerator(List<Map<String, dynamic>>? message) {
-    _cards.clear();
-    _cards.addAll([
-      TrainInfoCard(
-        title: 'title',
-        data: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(3, 2), FlSpot(4, 4)],
-      ),
-      TrainInfoCard(
-        title: 'title',
-        data: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(3, 2), FlSpot(4, 4)],
-      ),
-      TrainInfoCard(
-        title: 'title',
-        data: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(3, 2), FlSpot(4, 4)],
-      ),
-      TrainInfoCard(
-        title: 'title',
-        data: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(3, 2), FlSpot(4, 3), FlSpot(5, 4)],
-      )
-    ]);
-    _flow.clear();
+    message?.forEach((data) {
+      switch(data['command']) {
+        case 0: // Log data
+          int index = _cards.indexWhere((spotDataList) => spotDataList.title == data['name']);
+          if( index == -1) {    // Metric not added before
+            _cards.add(TrainInfoCard(title: data['name'], data: [FlSpot(1, data['value'])]));
+          }
+          else {    // Metric already added
+            List<FlSpot> dataSpot = _cards[index].data;
+            dataSpot.add(FlSpot(dataSpot.last.x + 1, data['value']));
+            _cards[index] = TrainInfoCard(title: _cards[index].title, data: dataSpot);
+          }
+          break;
+      }
+    });
   }
 
   Future<Widget> _getPlate() async {
-    final int maxColumnCount = 4;
+    final maxColumnCount = 4;
+    final minColumnCount = 4;
 
     return GridView.count(
       primary: false,
       crossAxisSpacing: 8,
       mainAxisSpacing: 8,
-      crossAxisCount: _cards.length > maxColumnCount ? maxColumnCount : (_cards.isEmpty ? 1 : _cards.length),
+      crossAxisCount: _cards.length > maxColumnCount ? maxColumnCount : (_cards.length < minColumnCount ? minColumnCount : _cards.length),
       children: _cards,
     );
   }
