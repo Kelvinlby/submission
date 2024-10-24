@@ -15,6 +15,8 @@ class Listener extends ListenerServiceBase {
       try {
         await for (var message in request) {
           _isReady = false;
+          sleep(Duration(milliseconds: 10));
+
           _messageBuff.add(
             {
               'command': message.command,
@@ -22,7 +24,6 @@ class Listener extends ListenerServiceBase {
               'value': message.value,
             }
           );
-          sleep(Duration(milliseconds: 10));
           _isReady = true;
         }
       }
@@ -44,11 +45,10 @@ class Listener extends ListenerServiceBase {
   List<Map<String, dynamic>>? messageGetAndClear() {
     if (_isReady) {
       _isReady = false;
+      sleep(Duration(milliseconds: 10));
 
       final List<Map<String, dynamic>> buff = _messageBuff;
       _messageBuff.clear();
-
-      sleep(Duration(milliseconds: 10));
 
       _isReady = true;
       return buff;
