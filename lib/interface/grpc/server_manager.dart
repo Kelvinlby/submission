@@ -9,7 +9,7 @@ class ServerManager {
   static grpc.Server? _server;
 
   static Future<void> launch() async {
-    _server = grpc.Server.create(services: [Record()]);
+    _server = grpc.Server.create(services: [Listener()]);
 
     try {
       await _server?.serve(port: 50051);
@@ -32,12 +32,12 @@ class ServerManager {
   static bool getLaunchState() => _launched;
 
   static Future<List<dynamic>?> listen() async {
-    Record record = Record();
+    Listener listener = Listener();
 
     if(!_launched) {
       return null;
     }
 
-    return record.getMessageAndClear();
+    return listener.getMessageAndClear();
   }
 }

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package communication;
+package server;
 
 
 message MessageData {
@@ -11,10 +11,10 @@ message MessageData {
 
 
 message ReturnData {
-  uint32 p = 1;
+  uint32 ret = 1;
 }
 
 
-service Record {
-  rpc ListenData(stream MessageData) returns (ReturnData){};
+service Listener {
+  rpc ListenStream(stream MessageData) returns (ReturnData){};
 }

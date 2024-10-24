@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:grpc/grpc.dart' as grpc;
-import './generated/communication.pbgrpc.dart';
+import './generated/server.pbgrpc.dart';
 
 
-class Record extends RecordServiceBase {
+class Listener extends ListenerServiceBase {
   int callCount = 0;
   final List<Map<String, dynamic>> _messageBuff = [];
   bool _isReady = false;
 
   @override
-  Future<ReturnData> listenData(grpc.ServiceCall call, Stream<MessageData> request) async {
+  Future<ReturnData> listenStream(grpc.ServiceCall call, Stream<MessageData> request) async {
     if (_isReady) {
       try {
         await for (var message in request) {
@@ -25,9 +25,11 @@ class Record extends RecordServiceBase {
           sleep(Duration(milliseconds: 10));
           _isReady = true;
         }
-      } catch (error) {
+      }
+      catch (error) {
         rethrow;
-      } finally {
+      }
+      finally {
         if (call.isCanceled) {
           throw('listen data: call canceled');
         }
@@ -36,8 +38,7 @@ class Record extends RecordServiceBase {
     else {
       throw('Loading data...');
     }
-    return ReturnData()
-      ..p = 1;
+    return ReturnData()..ret = 1;
   }
 
   List<Map<String, dynamic>>? getMessageAndClear() {
