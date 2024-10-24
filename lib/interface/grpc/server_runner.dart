@@ -29,7 +29,7 @@ class Record extends RecordServiceBase {
         rethrow;
       } finally {
         if (call.isCanceled) {
-          throw('listendata: call canceled');
+          throw('listen data: call canceled');
         }
       }
     }
