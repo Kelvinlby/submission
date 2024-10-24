@@ -6,13 +6,13 @@ import 'package:grpc/grpc.dart' as grpc;
 
 class ServerManager {
   static bool _launched = false;
-  static final grpc.Server _server = grpc.Server.create(services: [Record()]);
-  static final Record _record = Record as Record;
+  static grpc.Server? _server;
 
   static Future<void> launch() async {
+    _server = grpc.Server.create(services: [Record()]);
+
     try {
-      await _server.serve(port: 50051);
-      print('Server Launched!');
+      await _server?.serve(port: 50051);
       _launched = true;
     } catch (e) {
       if (e is SocketException && e.osError?.errorCode==97) {
@@ -25,22 +25,19 @@ class ServerManager {
   }
 
   static Future<void> stop() async {
-    await _server.shutdown();
-    print('Server Stopped!');
+    await _server?.shutdown();
     _launched = false;
   }
 
   static bool getLaunchState() => _launched;
 
   static Future<List<dynamic>?> listen() async {
+    Record record = Record();
+
     if(!_launched) {
       return null;
     }
 
-    print('Server Listening!');
-    final data = _record.getMessageAndClear();
-    sleep(Duration(seconds:1));
-
-    return data;
+    return record.getMessageAndClear();
   }
 }
