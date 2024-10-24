@@ -41,7 +41,7 @@ class Listener extends ListenerServiceBase {
     return ReturnData()..ret = 1;
   }
 
-  List<Map<String, dynamic>>? getMessageAndClear() {
+  List<Map<String, dynamic>>? messageGetAndClear() {
     if (_isReady) {
       _isReady = false;
 

@@ -31,13 +31,13 @@ class ServerManager {
 
   static bool getLaunchState() => _launched;
 
-  static Future<List<dynamic>?> listen() async {
+  static List<Map<String, dynamic>>? listen() {
     Listener listener = Listener();
 
     if(!_launched) {
       return null;
     }
 
-    return listener.getMessageAndClear();
+    return listener.messageGetAndClear();
   }
 }

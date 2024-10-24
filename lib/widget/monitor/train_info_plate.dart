@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:submission/widget/monitor/train_info_card.dart';
+import 'package:submission/interface/grpc/server_manager.dart';
 
 
 class TrainInfoPlate extends StatefulWidget {
@@ -58,7 +59,7 @@ class _TrainInfoPlateState extends State<TrainInfoPlate> {
     super.initState();
     _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       setState(() {
-        _widgetGenerator(null);
+        _widgetGenerator(ServerManager.listen());
       });
     });
   }
