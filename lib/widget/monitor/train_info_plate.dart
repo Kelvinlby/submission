@@ -14,6 +14,7 @@ class TrainInfoPlate extends StatefulWidget {
 
 
 class _TrainInfoPlateState extends State<TrainInfoPlate> {
+  bool _statusTracker = false;
   Widget? _widgetCache;
   Timer? _timer;
   final List<TrainInfoCard> _cards = [];
@@ -53,9 +54,18 @@ class _TrainInfoPlateState extends State<TrainInfoPlate> {
   void initState() {
     super.initState();
     _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
-      setState(() {
-        _widgetGenerator(ServerManager.listen());
-      });
+      if(ServerManager.getLaunchState()) {
+        if(!_statusTracker) {   // Clear previous logs on launch
+          _cards.clear();
+        }
+
+        setState(() {
+          _widgetGenerator(ServerManager.listen());
+        });
+      }
+      else {
+        _statusTracker = false;
+      }
     });
   }
 
@@ -70,26 +80,7 @@ class _TrainInfoPlateState extends State<TrainInfoPlate> {
     future: _getPlate(),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return _widgetCache ?? Center(
-          child: Column(
-            children: [
-              Icon(
-                Icons.data_thresholding_outlined,
-                size: 192,
-                color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                weight: 200,
-              ),
-              Text(
-                'No Data',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 96,
-                ),
-              ),
-            ],
-          ),
-        );
+        return _widgetCache ?? SizedBox.shrink();
       }
       else if (snapshot.hasError) {
         return Center(
