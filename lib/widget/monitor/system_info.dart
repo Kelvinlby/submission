@@ -67,7 +67,7 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                       NumberTitle(
                         title: 'RAM',
                         used: '${((_cpuInfo['UsedRam'] ?? 0) / 1024).toStringAsFixed(3)}GB',
-                        total: '${((_cpuInfo['TotalRam'] ?? 0) / 1024).toStringAsFixed(3)}GB',
+                        total: '${((_cpuInfo['TotalRam'] ?? 0) / 1024).toStringAsFixed(1)}GB',
                       ),
                       const Divider(height: 0),
                       Expanded(
@@ -124,7 +124,7 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                       NumberTitle(
                         title: 'VRAM',
                         used: '${((_gpuInfo['UsedVram'] ?? 0) / 1024).toStringAsFixed(3)}GB',
-                        total: '${((_gpuInfo['TotalVram'] ?? 0) / 1024).toStringAsFixed(3)}GB',
+                        total: '${((_gpuInfo['TotalVram'] ?? 0) / 1024).toStringAsFixed(1)}GB',
                       ),
                       const Divider(height: 0),
                       Expanded(

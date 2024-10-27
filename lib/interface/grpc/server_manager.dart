@@ -30,14 +30,4 @@ class ServerManager {
   }
 
   static bool getLaunchState() => _launched;
-
-  static List<Map<String, dynamic>>? listen() {
-    Listener listener = Listener();
-
-    if(!_launched) {
-      return null;
-    }
-
-    return listener.messageGetAndClear();
-  }
 }

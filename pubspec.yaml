@@ -95,7 +95,7 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
 
-linux:
-  dependencies:
-    gpu_monitor:
-      path: dependency/libGpuMonitor.so
+#linux:
+#  dependencies:
+#    gpu_monitor:
+#      path: dependency/libGpuMonitor.so

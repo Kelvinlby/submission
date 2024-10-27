@@ -56,7 +56,7 @@ class _FloatingButtonState extends State<FloatingButton> {
         if(controller != null) {
           String input = controller.text;
           Object value;
-          
+
           if(input.contains(".")) {
             value = double.tryParse(input) ?? input;
           }

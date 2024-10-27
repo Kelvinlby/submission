@@ -46,8 +46,8 @@ class _TrainInfoCardState extends State<TrainInfoCard> {
     double yRange = maxY - minY;
 
     // Add padding (10% of the range on each side)
-    double horizontalPadding = xRange * 0.1;
-    double verticalPadding = yRange * 0.1;
+    double horizontalPadding = xRange == 0 ? minX : xRange * 0.1;
+    double verticalPadding = yRange == 0? minY : yRange * 0.1;
 
     return Card(
       child: ClipRRect(
@@ -59,6 +59,7 @@ class _TrainInfoCardState extends State<TrainInfoCard> {
               value: widget.data.last.y.toStringAsFixed(3),
             ),
             const Divider(height: 0),
+            const SizedBox(height: 8),
             Expanded(
               child: Padding(
                 padding: EdgeInsets.all(16),
@@ -96,9 +97,6 @@ class _TrainInfoCardState extends State<TrainInfoCard> {
                           showTitles: true,
                           getTitlesWidget: (value, meta) {
                             // Only show titles for actual data points range
-                            if (value < minY || value > maxY) {
-                              return const SizedBox.shrink();
-                            }
 
                             return value.truncateToDouble() != value
                               ? Text(
