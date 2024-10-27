@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:submission/widget/monitor/job_info_plate.dart';
 import 'package:submission/widget/panel/config_cards.dart';
 
 
@@ -191,8 +192,13 @@ class _PanelState extends State<Panel> {
           : const SizedBox(height: 0),
         const SizedBox(height: 8),
         configPath != null
-          ? Card(child: TrainingConfigCard(path: configPath, width: width))
-          : const SizedBox(height: 0),
+            ? Card(child: TrainingConfigCard(path: configPath, width: width))
+            : const SizedBox(height: 0),
+        const SizedBox(height: 8),
+        SizedBox(
+          width: width,
+          child: const JobInfoPlate(),
+        ),
       ],
     );
   }

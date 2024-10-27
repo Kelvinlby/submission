@@ -18,7 +18,7 @@ class _TrainInfoPlateState extends State<TrainInfoPlate> {
     final minColumnCount = 3;
 
     return ValueListenableBuilder<List<TrainInfoCard>>(
-      valueListenable: WidgetManager.cardNotifier,
+      valueListenable: WidgetManager.trainDataNotifier,
       builder: (context, value, child) {
         return GridView.count(
           primary: false,
