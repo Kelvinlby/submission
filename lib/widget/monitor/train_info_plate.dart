@@ -30,6 +30,12 @@ class TrainInfoPlateState extends State<TrainInfoPlate> {
   }
 
   @override
+  void initState() {
+    WidgetManager.registerStateSetter('card', setState);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) => FutureBuilder(
     future: _getPlate(),
     builder: (context, snapshot) {
