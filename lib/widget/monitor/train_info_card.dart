@@ -97,6 +97,9 @@ class _TrainInfoCardState extends State<TrainInfoCard> {
                           showTitles: true,
                           getTitlesWidget: (value, meta) {
                             // Only show titles for actual data points range
+                            if (value < minY - 0.0001 || value > maxY + 0.0001) {
+                              return const SizedBox.shrink();
+                            }
 
                             return value.truncateToDouble() != value
                               ? Text(

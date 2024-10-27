@@ -1,29 +1,15 @@
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:submission/widget/monitor/train_info_card.dart';
 
 
 class WidgetManager {
   static final List<TrainInfoCard> _cards = [];
-  static bool _cardsReady = true;
-  static Function? _cardSetState;
-  
-  static void registerStateSetter(String name, Function setState) {
-    switch(name) {
-      case 'card':
-        _cardSetState = setState;
-        break;
-    }
-  }
+  static final cardNotifier = ValueNotifier<List<TrainInfoCard>>([]);
 
   static void generate(Map<String, dynamic> message) {
-    if(_cardSetState == null) {
-      return;
-    }
-
     switch(message['command']) {
       case 0: // Log data
-        _cardsReady = false;
-
         int index = _cards.indexWhere((spotDataList) => spotDataList.title == message['name']);
         if(index == -1) {    // Metric not added before
           _cards.add(TrainInfoCard(title: message['name'], data: [FlSpot(1, message['value'])]));
@@ -34,21 +20,14 @@ class WidgetManager {
           _cards[index] = TrainInfoCard(title: _cards[index].title, data: dataSpot);
         }
 
-        _cardsReady = true;
-        _cardSetState!.call();
+        cardNotifier.value = List.from(_cards);
         break;
     }
   }
 
-  static List<TrainInfoCard> getCards() {
-    while(!_cardsReady) {
-      Future.delayed(Duration(milliseconds: 5));
-    }
-    
-    return _cards;
-  }
-
   static void reset() {
     _cards.clear();
+    cardNotifier.value = List.from(_cards);
+    print("Widget Cleared");
   }
 }

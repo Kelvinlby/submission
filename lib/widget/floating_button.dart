@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:submission/interface/grpc/server_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:submission/widget/widget_manager.dart';
 
 
 Map<String, Map<String, TextEditingController>> paramController = {};
@@ -97,6 +98,7 @@ class _FloatingButtonState extends State<FloatingButton> {
       }
 
       if(interpreterPath != null && trainerPath != null) {
+        WidgetManager.reset();
         await ServerManager.launch();
         _process = await Process.start(interpreterPath, [trainerPath]);
         _process?.exitCode.then((code) {    // Process ends by itself
@@ -124,6 +126,15 @@ class _FloatingButtonState extends State<FloatingButton> {
     super.initState();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_launched) {
+
+        WidgetManager.generate(
+            {
+              'command': 0,
+              'name': 'Accuracy',
+              'value': _elapsedSeconds / 10,
+            }
+        );
+
         setState(() {
           _elapsedSeconds++;
         });
