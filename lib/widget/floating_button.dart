@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:submission/interface/grpc/server_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:submission/interface/process_manager.dart';
 import 'package:submission/widget/widget_manager.dart';
 
 
@@ -22,10 +23,10 @@ class _FloatingButtonState extends State<FloatingButton> {
   bool _launched = false;
   Timer? _timer;
   int _elapsedSeconds = 0;
-  Process? _process;
+  final processManager = ProcessManager();
 
-  void _stop() {
-    _process?.kill();
+  void _stop() async {
+    await processManager.stop();
 
     if(ServerManager.getLaunchState()) {
       ServerManager.stop();
@@ -100,10 +101,18 @@ class _FloatingButtonState extends State<FloatingButton> {
       if(interpreterPath != null && trainerPath != null) {
         WidgetManager.reset();
         await ServerManager.launch();
-        _process = await Process.start(interpreterPath, [trainerPath]);
-        _process?.exitCode.then((code) {    // Process ends by itself
-          _stop();
-        });
+        processManager.start(interpreterPath, trainerPath, callback: _stop).then((bool result){});
+        // _process = await Process.start(
+        //   interpreterPath,
+        //   ['-u', trainerPath],
+        //   environment: {
+        //     'PYTHONUNBUFFERED': '1',  // Disable Python output buffering
+        //   },
+        //   mode: ProcessStartMode.detachedWithStdio,
+        // );
+        // _process?.exitCode.then((code) {    // Process ends by itself
+        //   _stop();
+        // });
       }
 
       setState(() {
