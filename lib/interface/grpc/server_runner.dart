@@ -17,7 +17,6 @@ class Listener extends ListenerServiceBase {
             'value': message.value,
           }
         );
-        sleep(Duration(milliseconds: 10));
       }
     }
     catch (error) {
