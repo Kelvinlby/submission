@@ -6,7 +6,6 @@ import 'package:submission/widget/widget_manager.dart';
 
 
 class Listener extends ListenerServiceBase {
-
   @override
   Future<ReturnData> listenStream(grpc.ServiceCall call, Stream<MessageData> request) async {
     try {
