@@ -16,7 +16,7 @@ class Panel extends StatefulWidget {
 class _PanelState extends State<Panel> {
   @override
   Widget build(BuildContext context) => FutureBuilder(
-    future: _getPanel(setState),
+    future: _getPanel(Theme.of(context)),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         return Column(
@@ -55,7 +55,7 @@ class _PanelState extends State<Panel> {
   );
 
 
-  Future<Widget> _getPanel(Function setState) async {
+  Future<Widget> _getPanel(ThemeData theme) async {
     const int overflowLength = 23;
     const double width = 320.0;
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -188,11 +188,17 @@ class _PanelState extends State<Panel> {
         ),
         const SizedBox(height: 8),
         configPath != null
-          ? Card(child: ModelConfigCard(path: configPath, width: width))
+          ? Card(
+              color: theme.colorScheme.onSecondary,
+              child: ModelConfigCard(path: configPath, width: width)
+            )
           : const SizedBox(height: 0),
         const SizedBox(height: 8),
         configPath != null
-            ? Card(child: TrainingConfigCard(path: configPath, width: width))
+            ? Card(
+                color: theme.colorScheme.onSecondary,
+                child: TrainingConfigCard(path: configPath, width: width)
+              )
             : const SizedBox(height: 0),
         const SizedBox(height: 8),
         SizedBox(

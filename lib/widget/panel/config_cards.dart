@@ -13,7 +13,7 @@ Future<Map<String, dynamic>> _readJson(String path) async {
 }
 
 
-Future<Widget> _getCardContent(String path, String id) async {
+Future<Widget> _getCardContent(String path, String id, ThemeData theme) async {
   Map<String, TextEditingController> inputControllers = {};
   Map<String, dynamic> data = await _readJson(path);
   data = data[id];
@@ -29,7 +29,6 @@ Future<Widget> _getCardContent(String path, String id) async {
           fontWeight: FontWeight.w800,
         )
     ));
-    list.add(const Divider());
   }
   else if(id == 'train') {
     list.add(const Text(
@@ -39,8 +38,9 @@ Future<Widget> _getCardContent(String path, String id) async {
           fontWeight: FontWeight.w800,
         )
     ));
-    list.add(const Divider());
   }
+
+  list.add(Divider(color: theme.colorScheme.onSecondaryFixed));
 
   for(String param in params) {
     TextEditingController controller = TextEditingController(text: data[param].toString());
@@ -68,7 +68,7 @@ class ModelConfigCard extends StatelessWidget {
     return SizedBox(
       width: width,
       child: FutureBuilder(
-        future: _getCardContent(path, 'model'),
+        future: _getCardContent(path, 'model', Theme.of(context)),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Text('Loading ...');
@@ -96,7 +96,7 @@ class TrainingConfigCard extends StatelessWidget {
     return SizedBox(
       width: width,
       child: FutureBuilder(
-        future: _getCardContent(path, 'train'),
+        future: _getCardContent(path, 'train', Theme.of(context)),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Text('Loading ...');
