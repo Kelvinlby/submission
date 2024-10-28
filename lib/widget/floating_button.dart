@@ -126,13 +126,6 @@ class _FloatingButtonState extends State<FloatingButton> {
     super.initState();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_launched) {
-        WidgetManager.generate(
-          {
-            'command': 1,
-            'name': 'Job $_elapsedSeconds',
-            'value': null,
-          }
-        );
         setState(() {
           _elapsedSeconds++;
         });
