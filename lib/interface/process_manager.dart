@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter/material.dart';
 
 
 typedef ProcessCompletionCallback = void Function();
@@ -29,7 +28,8 @@ class ProcessManager {
 
       // Set up output handling
       _stdoutSubscription = _process?.stdout.listen((data) {
-          // print('Python stdout: ${String.fromCharCodes(data)}');
+          String message = String.fromCharCodes(data);
+
         },
         onError: (error) {} // print('stdout error: $error'),
       );
