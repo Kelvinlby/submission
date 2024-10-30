@@ -30,18 +30,18 @@ In order to adjust parameters directly in `Submission` , you need to create a `j
 - Install Python client package
 
 ```shell
-conda install submission-client
+conda install submission_client
 ```
 - Import and initialize
 ```python
-import submission-client as submission
+import submission_client as submission
 ```
 - Add a metric to be logged in `Submission`
 ```python
-submission.add_metric('YOUR_METRIC_NAME')
+submission.log_metric('YOUR_METRIC_NAME')
 ```
 - log the value of your metric
 ```python
-submission.log('YOUR_METRIC_NAME', 0.998)
+submission.log_job('YOUR_METRIC_NAME', 0.998)
 ```
 
