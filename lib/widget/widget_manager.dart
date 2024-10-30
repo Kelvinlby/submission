@@ -10,14 +10,6 @@ class WidgetManager {
   static final trainDataNotifier = ValueNotifier<List<TrainInfoCard>>([]);
   static final jobDataNotifier = ValueNotifier<List<JobInfoCard>>([]);
 
-  static void generateFromString(String str) {
-    Map<String, dynamic>? message = _parseString(str);
-
-    if(message != null) {
-      generate(message);
-    }
-  }
-
   static void generate(Map<String, dynamic> message) {
     switch(message['command']) {
       case 0:     // Log data
@@ -64,34 +56,5 @@ class WidgetManager {
     _jobInfoCards.clear();
     trainDataNotifier.value = List.from(_trainInfoCards);
     jobDataNotifier.value = List.from(_jobInfoCards);
-  }
-
-  static Map<String, dynamic>? _parseString(String input) {
-    // Check if the input string is in the correct format: `[command] (name) {value}`
-    RegExp regex = RegExp(r'^\[(\d+)\]\s\((\w+)\)\s\{([\d.]+)\}$');
-    Match? match = regex.firstMatch(input);
-
-    if (match == null) {
-      return null;
-    }
-
-    int command;
-    String name;
-    double value;
-
-    try {
-      command = int.parse(match.group(1)!);
-      name = match.group(2)!;
-      value = double.parse(match.group(3)!);
-    }
-    catch (e) {
-      return null;
-    }
-
-    return {
-      'command': command,
-      'name': name,
-      'value': value,
-    };
   }
 }

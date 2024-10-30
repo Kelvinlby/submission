@@ -21,13 +21,29 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
 
   // Line chart config
   final _limitCount = 75;
-  final ramPoints = <FlSpot>[FlSpot(0, 0)];
-  final vramPoints = <FlSpot>[FlSpot(0, 0)];
-  final gpuPoints = <FlSpot>[FlSpot(0, 0)];
+  late final List<FlSpot> ramPoints;
+  late final List<FlSpot> vramPoints;
+  late final List<FlSpot> gpuPoints;
 
   @override
   void initState() {
     super.initState();
+
+    ramPoints = List.generate(
+      _limitCount,
+      (index) => FlSpot(index * 0.0000001, 0),
+    );
+
+    vramPoints = List.generate(
+      _limitCount,
+      (index) => FlSpot(index * 0.0000001, 0),
+    );
+
+    gpuPoints = List.generate(
+      _limitCount,
+      (index) => FlSpot(index * 0.0000001, 0),
+    );
+
     _timer = Timer.periodic(const Duration(milliseconds: 150), (timer) {  // Do not change the duration below 150, or the line will shake.
       while (ramPoints.length > _limitCount) {
         ramPoints.removeAt(0);
