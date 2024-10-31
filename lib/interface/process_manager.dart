@@ -78,6 +78,7 @@ class ProcessManager {
   Future<void> _cleanup() async {
     await _stdoutSubscription?.cancel();
     await _stderrSubscription?.cancel();
+    _process?.kill();
     _process = null;
   }
 
