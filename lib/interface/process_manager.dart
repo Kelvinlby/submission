@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:submission/interface/gpu_monitor.dart';
+
 
 typedef ProcessCompletionCallback = void Function();
 
@@ -10,8 +12,11 @@ class ProcessManager {
   StreamSubscription? _stdoutSubscription;
   StreamSubscription? _stderrSubscription;
   ProcessCompletionCallback? _onNaturalCompletion;
+  GpuMonitor monitor = GpuMonitor();
 
   Future<bool> start(String interpreterPath, String scriptPath, {ProcessCompletionCallback? callback}) async {
+    Map<String, int> info = monitor.getGpuInfo();
+    
     try {
       await stop();
       _onNaturalCompletion = callback;
@@ -22,6 +27,7 @@ class ProcessManager {
         ['-u', scriptPath],
         environment: {
           'PYTHONUNBUFFERED': '1',  // Disable Python output buffering
+          'XLA_PYTHON_CLIENT_MEM_FRACTION': '.${98 - (info['VramUsage'] ?? 5)}' // XLA pre-allocation config
         },
         workingDirectory: Directory(scriptPath).parent.path,
       );
