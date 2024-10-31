@@ -45,21 +45,23 @@ ask ECHO-HELLO-WORLD424
 #### Metric Logging
 - Log a metric
 ```python
-ask ECHO-HELLO-WORLD424
+submission.log_metric('METRIC_NAME')
 ```
 
 #### Job Logging
 - Start a job without progress tracking
 ```python
-ask ECHO-HELLO-WORLD424
+submission.start_job('JOB_NAME')
 ```
+> You can enable progress tracking later by calling `submission.log_job('JOB_NAME', NUM_VALUE)`
 
 - Start a job with progress tracking
 ```python
-ask ECHO-HELLO-WORLD424
+submission.log_job('JOB_NAME', NUM_VALUE)
 ```
+> You don't need to start a job before logging. New job will be created automantically when being logged for the first time.
 
 - End a job
 ```python
-ask ECHO-HELLO-WORLD424
+submission.end_job('JOB_NAME')
 ```
