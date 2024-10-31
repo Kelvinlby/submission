@@ -6,10 +6,16 @@
 
 <br>
 
+## Key Features
+- One click training for all frameworks
+- Convenient parameter control
+- Neat system resource monitoring and training result ploting
+- Preallocation control for `XLA`: Full / On-demand allocation
+
+> To enable `XLA` preallocation control feature, use `-xla` flag or `submission-xla.desktop`
+
 ## Getting Started
-
 ### Configuring Adjustable Parameters
-
 In order to adjust parameters directly in `Submission` , you need to create a `json` file to store all the parameters you'd like Submission to adjust and select it in `Config` field in the left panel. The `json` file must contain two keywords: `model` and `train` , in which you should store related parameters. Here is an example:
 
 ```json5
@@ -25,23 +31,37 @@ In order to adjust parameters directly in `Submission` , you need to create a `j
 }
 ```
 
-### Logging Training State
-
-- Install Python client package
-
+### Setup Python Client
+- Install python package
 ```shell
-conda install submission_client
+conda install xxx
 ```
-- Import and initialize
+- Import
 ```python
-import submission_client as submission
-```
-- Add a metric to be logged in `Submission`
-```python
-submission.log_metric('YOUR_METRIC_NAME')
-```
-- log the value of your metric
-```python
-submission.log_job('YOUR_METRIC_NAME', 0.998)
+from submission_client import submission
 ```
 
+### Log Your Data
+#### Metric Logging
+- Log a metric
+```python
+submission.log_metric('METRIC_NAME', NUM_VALUE)
+```
+
+#### Job Logging
+- Start a job without progress tracking
+```python
+submission.start_job('JOB_NAME')
+```
+> You can enable progress tracking later by calling `submission.log_job('JOB_NAME', NUM_VALUE)`
+
+- Start a job with progress tracking
+```python
+submission.log_job('JOB_NAME', NUM_VALUE)
+```
+> You don't need to start a job before logging. New job will be created automantically when being logged for the first time.
+
+- End a job
+```python
+submission.end_job('JOB_NAME')
+```
