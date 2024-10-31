@@ -45,7 +45,7 @@ from submission_client import submission
 #### Metric Logging
 - Log a metric
 ```python
-submission.log_metric('METRIC_NAME')
+submission.log_metric('METRIC_NAME', NUM_VALUE)
 ```
 
 #### Job Logging
