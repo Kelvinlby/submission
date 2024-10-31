@@ -102,17 +102,6 @@ class _FloatingButtonState extends State<FloatingButton> {
         WidgetManager.reset();
         await ServerManager.launch();
         processManager.start(interpreterPath, trainerPath, callback: _stop).then((bool result){});
-        // _process = await Process.start(
-        //   interpreterPath,
-        //   ['-u', trainerPath],
-        //   environment: {
-        //     'PYTHONUNBUFFERED': '1',  // Disable Python output buffering
-        //   },
-        //   mode: ProcessStartMode.detachedWithStdio,
-        // );
-        // _process?.exitCode.then((code) {    // Process ends by itself
-        //   _stop();
-        // });
       }
 
       setState(() {
