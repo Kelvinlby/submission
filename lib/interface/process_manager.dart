@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:submission/interface/gpu_monitor.dart';
+import 'package:submission/main.dart';
 
 
 typedef ProcessCompletionCallback = void Function();
@@ -26,15 +27,19 @@ class ProcessManager {
       _process = await Process.start(
         interpreterPath,
         ['-u', scriptPath],
-        environment: xlaPreAllocatingStatus
-          ? {
-              'PYTHONUNBUFFERED': '1',  // Disable Python output buffering
-              'XLA_PYTHON_CLIENT_MEM_FRACTION': '.${98 - (info['VramUsage'] ?? 5)}' // XLA pre-allocation config
-            }
+        environment: arg.contains('-xla')
+          ? xlaPreAllocatingStatus
+              ? {
+                  'PYTHONUNBUFFERED': '1',  // Disable Python output buffering
+                  'XLA_PYTHON_CLIENT_MEM_FRACTION': '.${98 - (info['VramUsage'] ?? 5)}' // XLA pre-allocation config
+                }
+              : {
+                  'PYTHONUNBUFFERED': '1',  // Disable Python output buffering
+                  'XLA_PYTHON_CLIENT_MEM_FRACTION': '.${98 - (info['VramUsage'] ?? 5)}', // XLA pre-allocation config
+                  'XLA_PYTHON_CLIENT_ALLOCATOR': 'platform'
+                }
           : {
               'PYTHONUNBUFFERED': '1',  // Disable Python output buffering
-              'XLA_PYTHON_CLIENT_MEM_FRACTION': '.${98 - (info['VramUsage'] ?? 5)}', // XLA pre-allocation config
-              'XLA_PYTHON_CLIENT_ALLOCATOR': 'platform'
             },
         workingDirectory: Directory(scriptPath).parent.path,
       );

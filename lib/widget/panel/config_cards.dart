@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:submission/interface/process_manager.dart';
+import 'package:submission/main.dart';
 import 'package:submission/widget/panel/param_setter.dart';
 import 'package:submission/widget/floating_button.dart';
 
@@ -44,7 +45,8 @@ Future<Widget> _getCardContent(String path, String id, ThemeData theme, {Functio
 
     list.add(Divider(color: theme.colorScheme.onSecondaryFixed));
 
-    list.add(     // XLA config option
+    if(arg.contains('-xla')) {
+      list.add(     // XLA config option
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -66,7 +68,8 @@ Future<Widget> _getCardContent(String path, String id, ThemeData theme, {Functio
             ),
           ],
         )
-    );
+      );
+    }
   }
 
   for(String param in params) {

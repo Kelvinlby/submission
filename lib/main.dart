@@ -4,8 +4,12 @@ import 'package:submission/monitor.dart';
 import 'package:submission/widget/floating_button.dart';
 
 
-void main() {
+late final List<String> arg;
+
+
+void main(List<String> args) {
   runApp(const MyApp());
+  arg = args;
 }
 
 
