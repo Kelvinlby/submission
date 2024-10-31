@@ -32,13 +32,13 @@ In order to adjust parameters directly in `Submission` , you need to create a `j
 ```
 
 ### Setup Python Client
-Install python package
+- Install python package
 ```shell
-ask ECHO-HELLO-WORLD424
+conda install xxx
 ```
 - Import
 ```python
-ask ECHO-HELLO-WORLD424
+from submission_client import submission
 ```
 
 ### Log Your Data
