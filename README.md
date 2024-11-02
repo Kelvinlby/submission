@@ -34,11 +34,11 @@ In order to adjust parameters directly in `Submission` , you need to create a `j
 ### Setup Python Client
 - Install python package
 ```shell
-conda install xxx
+conda install submission
 ```
 - Import
 ```python
-from submission_client import submission
+from submission import start_job, log_job, log_metric, end_job
 ```
 
 ### Log Your Data
