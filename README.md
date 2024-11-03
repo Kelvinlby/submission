@@ -12,7 +12,7 @@
 - Neat system resource monitoring and training result ploting
 - Preallocation control for `XLA`: Full / On-demand allocation
 
-> To enable `XLA` preallocation control feature, use `-xla` flag or `submission-xla.desktop`
+> To enable `XLA` preallocation control feature, add `-xla` flag.
 
 ## Getting Started
 ### Configuring Adjustable Parameters
