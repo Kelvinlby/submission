@@ -38,6 +38,7 @@ conda install submission
 ```
 - Import
 ```python
+import asyncio
 from submission import start_job, log_job, log_metric, end_job
 ```
 
@@ -45,23 +46,23 @@ from submission import start_job, log_job, log_metric, end_job
 #### Metric Logging
 - Log a metric
 ```python
-submission.log_metric('METRIC_NAME', NUM_VALUE)
+asyncio.run(submission.log_metric('METRIC_NAME', NUM_VALUE))
 ```
 
 #### Job Logging
 - Start a job without progress tracking
 ```python
-submission.start_job('JOB_NAME')
+asyncio.run(submission.start_job('JOB_NAME'))
 ```
 > You can enable progress tracking later by calling `submission.log_job('JOB_NAME', NUM_VALUE)`
 
 - Start a job with progress tracking
 ```python
-submission.log_job('JOB_NAME', NUM_VALUE)
+asyncio.run(submission.log_job('JOB_NAME', NUM_VALUE))
 ```
 > You don't need to start a job before logging. New job will be created automantically when being logged for the first time.
 
 - End a job
 ```python
-submission.end_job('JOB_NAME')
+asyncio.run(submission.end_job('JOB_NAME'))
 ```
