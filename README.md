@@ -16,7 +16,7 @@
 
 ## Getting Started
 ### Installation
-First go to [Release](https://github.com/Kelvinlby/submission/release/latest) page and download the lates version of `Submission`.
+First go to [Release](https://github.com/Kelvinlby/submission/releases/latest) page and download the lates version of `Submission`.
 
 ### Configuring Adjustable Parameters
 Create a `json` file to store all the parameters you'd like Submission to adjust and select it in `Config` field in the left panel. The `json` file must contain two keywords: `model` and `train` , in which you should store related parameters. Here is an example:
