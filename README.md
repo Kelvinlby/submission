@@ -37,6 +37,8 @@ Create a `json` file to store all the parameters you'd like Submission to adjust
 ### Setup Python Client
 - Install python package
 ```shell
+conda install -c conda-forge grpcio
+conda install -c conda-forge grpcio-tools
 conda install patrick_echo_hello_world::submission
 ```
 - Import
