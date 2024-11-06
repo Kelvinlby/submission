@@ -38,12 +38,12 @@ class WidgetManager {
             _jobInfoCards.add(JobInfoCard(name: message['name'], percent: message['value']));
           }
         }
-        else {    // Metric already added
+        else {    // Job already added
           if(message['value'] == 1) {   // Job finished
             _jobInfoCards.removeAt(index);
           }
           else {
-            _jobInfoCards[index] = JobInfoCard(name: message['name'], percent: message['percent']);
+            _jobInfoCards[index] = JobInfoCard(name: message['name'], percent: message['value']);
           }
         }
         jobDataNotifier.value = List.from(_jobInfoCards);
