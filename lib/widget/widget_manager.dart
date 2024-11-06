@@ -35,7 +35,7 @@ class WidgetManager {
             break;
           }
           else {
-            _jobInfoCards.add(JobInfoCard(name: message['name'], percent: message['value'] == 'null' ? null : message['value']));
+            _jobInfoCards.add(JobInfoCard(name: message['name'], percent: message['value']));
           }
         }
         else {    // Metric already added
