@@ -46,7 +46,7 @@ class ProcessManager {
 
       // Set up output handling
       _stdoutSubscription = _process?.stdout.listen((data) {
-          // print('Python stderr: ${String.fromCharCodes(data)}');
+          // print('Python stdout: ${String.fromCharCodes(data)}');
         },
         onError: (error) {} // print('stdout error: $error'),
       );
