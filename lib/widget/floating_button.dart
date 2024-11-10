@@ -101,7 +101,7 @@ class _FloatingButtonState extends State<FloatingButton> {
       if(interpreterPath != null && trainerPath != null) {
         WidgetManager.reset();
         await ServerManager.launch();
-        processManager.start(interpreterPath, trainerPath, callback: _stop).then((bool result){});
+        processManager.start(interpreterPath, trainerPath, callback: _stop, error: _alert).then((bool result){});
       }
 
       setState(() {
@@ -109,6 +109,38 @@ class _FloatingButtonState extends State<FloatingButton> {
         _launched = true;
       });
     }
+  }
+
+  void _alert(String message) {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  message,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontFamily: 'JetBrains Mono',
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   String _formatElapsedTime(int seconds) {

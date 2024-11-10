@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/widgets.dart';
 import 'package:submission/interface/gpu_monitor.dart';
 import 'package:submission/main.dart';
 
@@ -16,8 +17,9 @@ class ProcessManager {
   ProcessCompletionCallback? _onNaturalCompletion;
   GpuMonitor monitor = GpuMonitor();
 
-  Future<bool> start(String interpreterPath, String scriptPath, {ProcessCompletionCallback? callback}) async {
+  Future<bool> start(String interpreterPath, String scriptPath, {ProcessCompletionCallback? callback, Function? error}) async {
     Map<String, int> info = monitor.getGpuInfo();
+    String? errorBuff;
     
     try {
       await stop();
@@ -52,7 +54,7 @@ class ProcessManager {
       );
 
       _stderrSubscription = _process?.stderr.listen((data) {
-          // print('Python stderr: ${String.fromCharCodes(data)}');
+          errorBuff = '$errorBuff${String.fromCharCodes(data)}\n\n';
         },
         onError: (error) {} // print('stderr error: $error'),
       );
@@ -60,6 +62,7 @@ class ProcessManager {
       // Set up process exit handling
       _process?.exitCode.then((code) {
         _onNaturalCompletion?.call();
+        error?.call(errorBuff);
         // print('Process exited with code: $code');
         _cleanup();
       }).catchError((error) {
