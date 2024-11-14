@@ -201,9 +201,11 @@ class _PanelState extends State<Panel> {
               )
             : const SizedBox(height: 0),
         const SizedBox(height: 8),
-        SizedBox(
-          width: width,
-          child: const JobInfoPlate(),
+        Expanded(
+          child: SizedBox(
+            width: width,
+            child: const JobInfoPlate(),
+          ),
         ),
       ],
     );

@@ -16,8 +16,11 @@ class _JobInfoPlateState extends State<JobInfoPlate> {
   Widget build(BuildContext context) => ValueListenableBuilder<List<JobInfoCard>>(
     valueListenable: WidgetManager.jobDataNotifier,
     builder: (context, value, child) {
-      return Column(
-        children: value,
+      return ListView.builder(
+        shrinkWrap: true,
+        physics: const ClampingScrollPhysics(),
+        itemCount: value.length,
+        itemBuilder: (context, index) => value[index],
       );
     },
   );
