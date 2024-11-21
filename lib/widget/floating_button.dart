@@ -121,7 +121,7 @@ class _FloatingButtonState extends State<FloatingButton> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(
+                SelectableText(
                   message,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontFamily: 'JetBrains Mono',
@@ -132,6 +132,7 @@ class _FloatingButtonState extends State<FloatingButton> {
           ),
           actions: <Widget>[
             TextButton(
+              autofocus: true,
               child: const Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
