@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
-import 'package:flutter/widgets.dart';
 import 'package:submission/interface/gpu_monitor.dart';
 import 'package:submission/main.dart';
 
