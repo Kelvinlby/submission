@@ -136,7 +136,7 @@ class _TrainInfoCardState extends State<TrainInfoCard> {
                         spots: widget.data,
                         isStrokeCapRound: true,
                         dotData: FlDotData(
-                          show: true,
+                          show: false,
                           getDotPainter: (spot, percent, barData, index) {
                             return FlDotCirclePainter(
                               radius: 4,
