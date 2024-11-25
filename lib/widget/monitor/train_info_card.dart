@@ -75,7 +75,6 @@ class _TrainInfoCardState extends State<TrainInfoCard> {
                       rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                       bottomTitles: AxisTitles(
                         sideTitles: SideTitles(
-                          interval: 1,
                           showTitles: true,
                           getTitlesWidget: (value, meta) {
                             if (value < minX || value > maxX) {
