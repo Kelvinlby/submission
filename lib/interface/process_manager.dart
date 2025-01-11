@@ -4,7 +4,6 @@ import 'package:submission/interface/gpu_monitor.dart';
 import 'package:submission/main.dart';
 
 
-typedef ProcessCompletionCallback = void Function();
 bool xlaPreAllocatingStatus = true;
 
 
@@ -12,17 +11,14 @@ class ProcessManager {
   Process? _process;
   StreamSubscription? _stdoutSubscription;
   StreamSubscription? _stderrSubscription;
-  ProcessCompletionCallback? _onNaturalCompletion;
   GpuMonitor monitor = GpuMonitor();
 
-  Future<bool> start(String interpreterPath, String scriptPath, {ProcessCompletionCallback? callback, Function? error}) async {
+  Future<bool> start(String interpreterPath, String scriptPath, {Function? finish, Function? error}) async {
     Map<String, int> info = monitor.getGpuInfo();
     
     try {
       await stop();
-      _onNaturalCompletion = callback;
 
-      // Start the process with proper environment setup
       _process = await Process.start(
         interpreterPath,
         ['-u', scriptPath],
@@ -58,7 +54,7 @@ class ProcessManager {
 
       // Set up process exit handling
       _process?.exitCode.then((code) {
-        _onNaturalCompletion?.call();
+        finish?.call();
         // print('Process exited with code: $code');
         _cleanup();
       }).catchError((error) {

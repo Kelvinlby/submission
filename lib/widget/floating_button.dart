@@ -101,7 +101,7 @@ class _FloatingButtonState extends State<FloatingButton> {
       if(interpreterPath != null && trainerPath != null) {
         WidgetManager.reset();
         await ServerManager.launch();
-        processManager.start(interpreterPath, trainerPath, callback: _stop, error: _alert).then((bool result){});
+        processManager.start(interpreterPath, trainerPath, finish: _stop, error: _alert).then((bool result){});
       }
 
       setState(() {
