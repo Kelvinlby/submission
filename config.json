@@ -1,0 +1,1 @@
+{"model":{"Feature":1024,"ATTN Feature":1024,"FFN Feature":1920,"Head Count":16,"Group Size":4,"Random Scalar":0.02,"Decoder Count":14},"train":{"Peak LR":"8e-4","Anneal LR":"8e-7","Warmup Steps":2000,"Decay Steps":300000,"Trans Steps":100,"Anneal Steps":2000,"Batch Size":120,"Context Length":500,"Stride":50}}
