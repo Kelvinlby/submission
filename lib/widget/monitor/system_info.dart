@@ -20,7 +20,7 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
   final GpuMonitor _monitor = GpuMonitor();
 
   // Line chart config
-  final _limitCount = 75;
+  final _limitCount = 135;
   late final List<FlSpot> ramPoints;
   late final List<FlSpot> vramPoints;
   late final List<FlSpot> gpuPoints;
