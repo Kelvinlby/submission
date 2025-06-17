@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:submission/interface/process_manager.dart';
-import 'package:submission/widget/widget_manager.dart';
 
 
 Map<String, Map<String, TextEditingController>> paramController = {};
@@ -94,7 +93,6 @@ class _FloatingButtonState extends State<FloatingButton> {
       }
 
       if(interpreterPath != null && trainerPath != null) {
-        WidgetManager.reset();
         processManager.start(interpreterPath, trainerPath, finish: _stop, error: _alert).then((bool result){});
       }
 
