@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:submission/interface/grpc/server_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:submission/interface/process_manager.dart';
 import 'package:submission/widget/widget_manager.dart';
@@ -27,10 +26,6 @@ class _FloatingButtonState extends State<FloatingButton> {
 
   void _stop() async {
     await processManager.stop();
-
-    if(ServerManager.getLaunchState()) {
-      ServerManager.stop();
-    }
 
     setState(() {
       _launched = false;
@@ -100,7 +95,6 @@ class _FloatingButtonState extends State<FloatingButton> {
 
       if(interpreterPath != null && trainerPath != null) {
         WidgetManager.reset();
-        await ServerManager.launch();
         processManager.start(interpreterPath, trainerPath, finish: _stop, error: _alert).then((bool result){});
       }
 

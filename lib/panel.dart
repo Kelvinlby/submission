@@ -107,7 +107,7 @@ class _PanelState extends State<Panel> {
                   labelText: 'Interpreter',
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.folder_outlined),
-                    onPressed: () { _pickPath('Path to Interpreter', '', setState); },
+                    onPressed: () { _pickPath('Path to Interpreter', null, setState); },
                   ),
                 )
               : interpreterPathEllipsis
@@ -117,7 +117,7 @@ class _PanelState extends State<Panel> {
                   prefix: const Text('...', style: TextStyle(color: Colors.grey)),
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.folder_outlined),
-                    onPressed: () { _pickPath('Path to Interpreter', '', setState); },
+                    onPressed: () { _pickPath('Path to Interpreter', null, setState); },
                   ),
                 )
               : InputDecoration(
@@ -125,7 +125,7 @@ class _PanelState extends State<Panel> {
                   labelText: 'Interpreter',
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.folder_outlined),
-                    onPressed: () { _pickPath('Path to Interpreter', '', setState); },
+                    onPressed: () { _pickPath('Path to Interpreter', null, setState); },
                   ),
                 )
           ),
@@ -145,7 +145,7 @@ class _PanelState extends State<Panel> {
                   prefix: const Text('...', style: TextStyle(color: Colors.grey)),
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.folder_outlined),
-                    onPressed: () { _pickPath('Path to Config', 'json', setState); },
+                    onPressed: () { _pickPath('Path to Config', ['json'], setState); },
                   ),
                 )
               : InputDecoration(
@@ -153,7 +153,7 @@ class _PanelState extends State<Panel> {
                   labelText: 'Config',
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.folder_outlined),
-                    onPressed: () { _pickPath('Path to Config', 'json', setState); },
+                    onPressed: () { _pickPath('Path to Config', ['json'], setState); },
                   ),
                 )
           ),
@@ -173,7 +173,7 @@ class _PanelState extends State<Panel> {
                   prefix: const Text('...', style: TextStyle(color: Colors.grey)),
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.folder_outlined),
-                    onPressed: () { _pickPath('Path to Trainer', 'py', setState); },
+                    onPressed: () { _pickPath('Path to Trainer', ['py', 'python'], setState); },
                   ),
                 )
               : InputDecoration(
@@ -181,7 +181,7 @@ class _PanelState extends State<Panel> {
                   labelText: 'Trainer',
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.folder_outlined),
-                    onPressed: () { _pickPath('Path to Trainer', 'py', setState); },
+                    onPressed: () { _pickPath('Path to Trainer', ['py', 'python'], setState); },
                   ),
                 )
           ),
@@ -213,17 +213,24 @@ class _PanelState extends State<Panel> {
 }
 
 
-void _pickPath(String id, String extension, Function setState) async {
+void _pickPath(String id, List<String>? extension, Function setState) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  FilePickerResult? result = await FilePicker.platform.pickFiles(
-    type: FileType.custom,
-    allowedExtensions: [extension],
-    dialogTitle: id
-  );
+  FilePickerResult? result;
+
+  if(extension != null) {
+    result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: extension,
+      dialogTitle: id,
+    );
+  }
+  else {
+    result = await FilePicker.platform.pickFiles(dialogTitle: id);
+  }
 
   if(result != null) {
     setState(() {
-      prefs.setString(id, result.files.first.path!);
+      prefs.setString(id, result!.files.first.path!);
     });
   }
 }
