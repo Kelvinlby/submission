@@ -60,6 +60,7 @@ class _PanelState extends State<Panel> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     bool isConda = false, interpreterPathEllipsis = false, configPathEllipsis = false, trainerPathEllipsis = false;
+    String condaNotation = 'Base Conda';
     String? interpreterPath = prefs.getString('Path to Interpreter');
     String? configPath = prefs.getString('Path to Config');
     String? trainerPath = prefs.getString('Path to Trainer');
@@ -67,6 +68,22 @@ class _PanelState extends State<Panel> {
     if(interpreterPath != null) {
       if(interpreterPath.contains('miniconda')) {
         isConda = true;
+
+        if(interpreterPath.contains('envs')) {
+          List<String> segments = interpreterPath.split('/');
+
+          int lastEnvsIndex = -1;
+          for (int i = segments.length - 1; i >= 0; i--) {
+            if (segments[i] == 'envs') {
+              lastEnvsIndex = i;
+              break;
+            }
+          }
+
+          if (lastEnvsIndex != -1 && lastEnvsIndex + 1 < segments.length) {
+            condaNotation = 'Conda: ${segments[lastEnvsIndex + 1]}';
+          }
+        }
       }
       else if(interpreterPath.length >= overflowLength) {
         interpreterPathEllipsis = true;
@@ -96,7 +113,7 @@ class _PanelState extends State<Panel> {
             readOnly: true,
             style: const TextStyle(fontFamily: 'JetBrains Mono'),
             initialValue: isConda
-              ? 'miniconda'
+              ? condaNotation
               : interpreterPathEllipsis
                 ? interpreterPath!.substring(interpreterPath.length - overflowLength)
                 : interpreterPath,
