@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:submission/interface/gpu_monitor.dart';
 import 'package:submission/widget/monitor/monitor_title.dart';
+import 'package:submission/widget/xla_slider.dart';
 
 
 class SystemInfoCard extends StatefulWidget {
@@ -241,6 +242,8 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                 ),
               ),
             ),
+            const SizedBox(height: 8),
+            const XlaSlider(),
             const SizedBox(height: 96),
           ],
         );

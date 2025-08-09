@@ -55,11 +55,9 @@ class _PanelState extends State<Panel> {
 
 
   Future<Widget> _getPanel(ThemeData theme) async {
-    const int overflowLength = 23;
-    const double width = 320.0;
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    bool isConda = false, interpreterPathEllipsis = false, configPathEllipsis = false, trainerPathEllipsis = false;
+    bool isConda = false;
     String condaNotation = 'Base Conda';
     String? interpreterPath = prefs.getString('Path to Interpreter');
     String? configPath = prefs.getString('Path to Config');
@@ -85,21 +83,6 @@ class _PanelState extends State<Panel> {
           }
         }
       }
-      else if(interpreterPath.length >= overflowLength) {
-        interpreterPathEllipsis = true;
-      }
-    }
-
-    if(configPath != null) {
-      if(configPath.length >= overflowLength) {
-        configPathEllipsis = true;
-      }
-    }
-
-    if(trainerPath != null) {
-      if(trainerPath.length >= overflowLength) {
-        trainerPathEllipsis = true;
-      }
     }
 
     return Column(
@@ -107,115 +90,63 @@ class _PanelState extends State<Panel> {
       children: [
         const SizedBox(height: 1),
         SizedBox(
-          width: width,
           height: 56,
           child: TextFormField(
             readOnly: true,
             style: const TextStyle(fontFamily: 'JetBrains Mono'),
-            initialValue: isConda
-              ? condaNotation
-              : interpreterPathEllipsis
-                ? interpreterPath!.substring(interpreterPath.length - overflowLength)
-                : interpreterPath,
-            decoration: isConda
-              ? InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: 'Interpreter',
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.folder_outlined),
-                    onPressed: () { _pickPath('Path to Interpreter', null, setState); },
-                  ),
-                )
-              : interpreterPathEllipsis
-              ? InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: 'Interpreter',
-                  prefix: const Text('...', style: TextStyle(color: Colors.grey)),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.folder_outlined),
-                    onPressed: () { _pickPath('Path to Interpreter', null, setState); },
-                  ),
-                )
-              : InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: 'Interpreter',
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.folder_outlined),
-                    onPressed: () { _pickPath('Path to Interpreter', null, setState); },
-                  ),
-                )
-          ),
-        ),
-        const SizedBox(height: 8),
-        SizedBox(
-          width: width,
-          height: 56,
-          child: TextFormField(
-            readOnly: true,
-            style: const TextStyle(fontFamily: 'JetBrains Mono'),
-            initialValue: configPathEllipsis ? configPath!.substring(configPath.length - overflowLength) : configPath,
-            decoration: configPathEllipsis
-              ? InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: 'Config',
-                  prefix: const Text('...', style: TextStyle(color: Colors.grey)),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.folder_outlined),
-                    onPressed: () { _pickPath('Path to Config', ['json'], setState); },
-                  ),
-                )
-              : InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: 'Config',
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.folder_outlined),
-                    onPressed: () { _pickPath('Path to Config', ['json'], setState); },
-                  ),
-                )
-          ),
-        ),
-        const SizedBox(height: 8),
-        SizedBox(
-          width: width,
-          height: 56,
-          child: TextFormField(
-            readOnly: true,
-            style: const TextStyle(fontFamily: 'JetBrains Mono'),
-            initialValue: trainerPathEllipsis ? trainerPath!.substring(trainerPath.length - overflowLength) : trainerPath,
-            decoration: trainerPathEllipsis
-              ? InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: 'Trainer',
-                  prefix: const Text('...', style: TextStyle(color: Colors.grey)),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.folder_outlined),
-                    onPressed: () { _pickPath('Path to Trainer', ['py', 'python'], setState); },
-                  ),
-                )
-              : InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: 'Trainer',
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.folder_outlined),
-                    onPressed: () { _pickPath('Path to Trainer', ['py', 'python'], setState); },
-                  ),
-                )
-          ),
-        ),
-        const SizedBox(height: 8),
-        configPath != null
-          ? Card(
-              color: theme.colorScheme.onSecondary,
-              child: ModelConfigCard(path: configPath, width: width)
+            initialValue: isConda ? condaNotation : interpreterPath,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              labelText: 'Interpreter',
+              suffixIcon: IconButton(
+                icon: const Icon(Icons.folder_outlined),
+                onPressed: () { _pickPath('Path to Interpreter', null, setState); },
+              ),
             )
-          : const SizedBox(height: 0),
+          ),
+        ),
+        const SizedBox(height: 8),
+        SizedBox(
+          height: 56,
+          child: TextFormField(
+            readOnly: true,
+            style: const TextStyle(fontFamily: 'JetBrains Mono'),
+            initialValue: configPath,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              labelText: 'Config',
+              suffixIcon: IconButton(
+                icon: const Icon(Icons.folder_outlined),
+                onPressed: () { _pickPath('Path to Config', ['json'], setState); },
+              ),
+            )
+          ),
+        ),
+        const SizedBox(height: 8),
+        SizedBox(
+          height: 56,
+          child: TextFormField(
+            readOnly: true,
+            style: const TextStyle(fontFamily: 'JetBrains Mono'),
+            initialValue: trainerPath,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              labelText: 'Trainer',
+              suffixIcon: IconButton(
+                icon: const Icon(Icons.folder_outlined),
+                onPressed: () { _pickPath('Path to Trainer', ['py', 'python'], setState); },
+              ),
+            )
+          ),
+        ),
         const SizedBox(height: 8),
         configPath != null
-            ? Card(
-                color: theme.colorScheme.onSecondary,
-                child: TrainingConfigCard(path: configPath, width: width)
-              )
-            : const SizedBox(height: 0),
+          ? Expanded(
+              child: SingleChildScrollView(
+                child: DynamicConfigCards(path: configPath),
+              ),
+            )
+          : const Expanded(child: SizedBox()),
       ],
     );
   }

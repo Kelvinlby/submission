@@ -4,7 +4,26 @@ import 'package:submission/interface/gpu_monitor.dart';
 import 'package:submission/main.dart';
 
 
-bool xlaPreAllocatingStatus = true;
+// Helper function to generate XLA environment variables
+Map<String, String> getXlaEnvironmentVars(Map<String, int> gpuInfo, double xlaMemoryPercentage) {
+  Map<String, String> env = {'PYTHONUNBUFFERED': '1'};
+  
+  if (xlaMemoryPercentage == 0.0) {
+    // 0% - Use platform allocator (on-demand allocation)
+    env['XLA_PYTHON_CLIENT_ALLOCATOR'] = 'platform';
+  } else if (xlaMemoryPercentage < 98.0) {
+    // <98% - Use specified percentage
+    String percentage = '.${xlaMemoryPercentage.round().toString().padLeft(2, '0')}';
+    env['XLA_PYTHON_CLIENT_MEM_FRACTION'] = percentage;
+  } else {
+    // >=98% - Use dynamic calculation based on current VRAM usage
+    int dynamicPercentage = 98 - (gpuInfo['VramUsage'] ?? 5);
+    String percentage = '.${dynamicPercentage.toString().padLeft(2, '0')}';
+    env['XLA_PYTHON_CLIENT_MEM_FRACTION'] = percentage;
+  }
+  
+  return env;
+}
 
 
 class ProcessManager {
@@ -13,7 +32,7 @@ class ProcessManager {
   StreamSubscription? _stderrSubscription;
   GpuMonitor monitor = GpuMonitor();
 
-  Future<bool> start(String interpreterPath, String scriptPath, {Function? finish, Function? error}) async {
+  Future<bool> start(String interpreterPath, String scriptPath, {Function? finish, Function? error, double xlaPercentage = 80.0}) async {
     Map<String, int> info = monitor.getGpuInfo();
     
     try {
@@ -23,19 +42,8 @@ class ProcessManager {
         interpreterPath,
         ['-u', scriptPath],
         environment: arg.contains('-xla')
-          ? xlaPreAllocatingStatus
-              ? {
-                  'PYTHONUNBUFFERED': '1',  // Disable Python output buffering
-                  'XLA_PYTHON_CLIENT_MEM_FRACTION': '.${98 - (info['VramUsage'] ?? 5)}' // XLA pre-allocation config
-                }
-              : {
-                  'PYTHONUNBUFFERED': '1',  // Disable Python output buffering
-                  'XLA_PYTHON_CLIENT_MEM_FRACTION': '.${98 - (info['VramUsage'] ?? 5)}', // XLA pre-allocation config
-                  'XLA_PYTHON_CLIENT_ALLOCATOR': 'platform'
-                }
-          : {
-              'PYTHONUNBUFFERED': '1',  // Disable Python output buffering
-            },
+          ? getXlaEnvironmentVars(info, xlaPercentage)
+          : {'PYTHONUNBUFFERED': '1'},
         workingDirectory: Directory(scriptPath).parent.path,
       );
 

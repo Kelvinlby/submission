@@ -41,16 +41,20 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
         child: Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 20.0,    // More padding for visual balance
-                left: 16.0,
-                bottom: 16.0,
+            Expanded(
+              flex: 1,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 20.0,    // Consistent padding for visual balance
+                  left: 16.0,
+                  bottom: 16.0,
+                  right: 8.0,
+                ),
+                child: Panel(),
               ),
-              child: Panel(),
             ),
             Expanded(
-              flex: 3,
+              flex: 4,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Monitor(),
@@ -60,6 +64,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: const FloatingButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
