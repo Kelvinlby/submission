@@ -129,6 +129,11 @@ class _ConfigCardState extends State<ConfigCard> {
 Future<List<String>> _getConfigSections(String path) async {
   try {
     Map<String, dynamic> data = await _readJson(path);
+    
+    // Clear the paramController when loading a new config
+    // This prevents old sections from persisting
+    paramController.clear();
+    
     return data.keys.toList();
   } catch (e) {
     // If JSON parsing fails, return empty list
