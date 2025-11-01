@@ -57,8 +57,8 @@ class _PanelState extends State<Panel> {
   Future<Widget> _getPanel(ThemeData theme) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    bool isConda = false;
-    String condaNotation = 'Base Conda';
+    bool isConda = false, isUv = false;
+    String condaNotation = 'Base Conda', uvNotation = 'uv';
     String? interpreterPath = prefs.getString('Path to Interpreter');
     String? configPath = prefs.getString('Path to Config');
     String? trainerPath = prefs.getString('Path to Trainer');
@@ -82,6 +82,24 @@ class _PanelState extends State<Panel> {
             condaNotation = 'Conda: ${segments[lastEnvsIndex + 1]}';
           }
         }
+      } else if(interpreterPath.contains('.venv')) {
+        isUv = true;
+
+        List<String> segments = interpreterPath.split('/');
+
+        int venvIndex = -1;
+        for (int i = 0; i < segments.length; i++) {
+          if (segments[i] == '.venv') {
+            venvIndex = i;
+            break;
+          }
+        }
+
+        if (venvIndex > 0) {
+          uvNotation = 'uv: ${segments[venvIndex - 1]}';
+        } else {
+          uvNotation = 'uv';
+        }
       }
     }
 
@@ -94,7 +112,11 @@ class _PanelState extends State<Panel> {
           child: TextFormField(
             readOnly: true,
             style: const TextStyle(fontFamily: 'JetBrains Mono'),
-            initialValue: isConda ? condaNotation : interpreterPath,
+            initialValue: isConda
+                ? condaNotation
+                : isUv
+                    ? uvNotation
+                    : interpreterPath,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
               labelText: 'Interpreter',
