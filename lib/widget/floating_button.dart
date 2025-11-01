@@ -2,13 +2,54 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:submission/interface/grpc/server_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:submission/interface/process_manager.dart';
-import 'package:submission/widget/widget_manager.dart';
 
 
 Map<String, Map<String, TextEditingController>> paramController = {};
+
+// XLA Memory allocation percentage (0-100)
+double xlaMemoryPercentage = 80.0;
+
+
+// Helper function to parse string back to appropriate JSON type
+dynamic _parseValue(String input) {
+  if (input.isEmpty) {
+    return '';
+  }
+  
+  // Handle null
+  if (input.toLowerCase() == 'null') {
+    return null;
+  }
+  
+  // Handle boolean
+  if (input.toLowerCase() == 'true') {
+    return true;
+  }
+  if (input.toLowerCase() == 'false') {
+    return false;
+  }
+  
+  // Handle numbers
+  if (RegExp(r'^-?\d+$').hasMatch(input)) {
+    // Integer
+    return int.tryParse(input) ?? input;
+  }
+  
+  if (RegExp(r'^-?\d+\.\d+$').hasMatch(input)) {
+    // Double
+    return double.tryParse(input) ?? input;
+  }
+  
+  // Try to parse as JSON (for complex objects/arrays)
+  try {
+    return jsonDecode(input);
+  } catch (e) {
+    // If it's not valid JSON, treat as string
+    return input;
+  }
+}
 
 
 class FloatingButton extends StatefulWidget {
@@ -28,21 +69,13 @@ class _FloatingButtonState extends State<FloatingButton> {
   void _stop() async {
     await processManager.stop();
 
-    if(ServerManager.getLaunchState()) {
-      ServerManager.stop();
-    }
-
     setState(() {
       _launched = false;
     });
   }
 
   void _launch() async {
-    Map<String, TextEditingController>? modelController = paramController['model'];
-    Map<String, TextEditingController>? trainerController = paramController['train'];
-    Map<String, Map<String, dynamic>> param= {};
-    Map<String, dynamic> modelParam = {};
-    Map<String, dynamic> trainerParam = {};
+    Map<String, Map<String, dynamic>> param = {};
     String jsonString;
     File configFile;
 
@@ -51,45 +84,27 @@ class _FloatingButtonState extends State<FloatingButton> {
     String? configPath = prefs.getString('Path to Config');
     String? trainerPath = prefs.getString('Path to Trainer');
 
-    if(modelController != null && trainerController != null) {
-      for(String param in modelController.keys) {
-        TextEditingController? controller = modelController[param];
+    // Check if we have any parameter controllers
+    if(paramController.isNotEmpty) {
+      // Process all sections dynamically
+      for(String sectionId in paramController.keys) {
+        Map<String, TextEditingController>? sectionController = paramController[sectionId];
+        Map<String, dynamic> sectionParam = {};
+        
+        if(sectionController != null) {
+          for(String paramName in sectionController.keys) {
+            TextEditingController? controller = sectionController[paramName];
 
-        if(controller != null) {
-          String input = controller.text;
-          Object value;
-
-          if(input.contains(".")) {
-            value = double.tryParse(input) ?? input;
+            if(controller != null) {
+              String input = controller.text.trim();
+              dynamic value = _parseValue(input);
+              sectionParam[paramName] = value;
+            }
           }
-          else {
-            value = int.tryParse(input) ?? input;
-          }
-
-          modelParam[param] = value;
+          
+          param[sectionId] = sectionParam;
         }
       }
-
-      for(String param in trainerController.keys) {
-        TextEditingController? controller = trainerController[param];
-
-        if(controller != null) {
-          String input = controller.text;
-          Object value;
-
-          if(input.contains(".")) {
-            value = double.tryParse(input) ?? input;
-          }
-          else {
-            value = int.tryParse(input) ?? input;
-          }
-
-          trainerParam[param] = value;
-        }
-      }
-
-      param['model'] = modelParam;
-      param['train'] = trainerParam;
 
       jsonString = jsonEncode(param);
 
@@ -99,9 +114,7 @@ class _FloatingButtonState extends State<FloatingButton> {
       }
 
       if(interpreterPath != null && trainerPath != null) {
-        WidgetManager.reset();
-        await ServerManager.launch();
-        processManager.start(interpreterPath, trainerPath, finish: _stop, error: _alert).then((bool result){});
+        processManager.start(interpreterPath, trainerPath, finish: _stop, error: _alert, xlaPercentage: xlaMemoryPercentage).then((bool result){});
       }
 
       setState(() {

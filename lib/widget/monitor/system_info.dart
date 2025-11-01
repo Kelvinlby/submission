@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:submission/interface/gpu_monitor.dart';
 import 'package:submission/widget/monitor/monitor_title.dart';
+import 'package:submission/widget/xla_slider.dart';
 
 
 class SystemInfoCard extends StatefulWidget {
@@ -20,7 +21,7 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
   final GpuMonitor _monitor = GpuMonitor();
 
   // Line chart config
-  final _limitCount = 75;
+  final _limitCount = 135;
   late final List<FlSpot> ramPoints;
   late final List<FlSpot> vramPoints;
   late final List<FlSpot> gpuPoints;
@@ -72,7 +73,7 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        return Row(
+        return Column(
           children: [
             Expanded(
               child: Card(
@@ -108,13 +109,13 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                                 spots: ramPoints,
                                 dotData: const FlDotData(show: false),
                                 gradient: LinearGradient(
-                                  colors: [Colors.cyan.withOpacity(0), Colors.cyan],
+                                  colors: [Colors.cyan.withAlpha(0), Colors.cyan],
                                   stops: const [0.1, 1.0],
                                 ),
                                 belowBarData: BarAreaData(
                                   show: true,
                                   gradient: LinearGradient(
-                                    colors: [Colors.cyan.withOpacity(0), Colors.cyan.withOpacity(0.3)],
+                                    colors: [Colors.cyan.withAlpha(0), Colors.cyan.withAlpha(76)],
                                     stops: const [0.1, 1.0],
                                   ),
                                 ),
@@ -130,7 +131,7 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                 ),
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(height: 8),
             Expanded(
               child: Card(
                 child: ClipRRect(
@@ -164,13 +165,13 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                                 spots: vramPoints,
                                 dotData: const FlDotData(show: false),
                                 gradient: LinearGradient(
-                                  colors: [Colors.orange.withOpacity(0), Colors.orange],
+                                  colors: [Colors.orange.withAlpha(0), Colors.orange],
                                   stops: const [0.1, 1.0],
                                 ),
                                 belowBarData: BarAreaData(
                                   show: true,
                                   gradient: LinearGradient(
-                                    colors: [Colors.orange.withOpacity(0), Colors.orange.withOpacity(0.3)],
+                                    colors: [Colors.orange.withAlpha(0), Colors.orange.withAlpha(76)],
                                     stops: const [0.1, 1.0],
                                   ),
                                 ),
@@ -186,7 +187,7 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                 ),
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(height: 8),
             Expanded(
               child: Card(
                 child: ClipRRect(
@@ -219,13 +220,13 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                                 spots: gpuPoints,
                                 dotData: const FlDotData(show: false),
                                 gradient: LinearGradient(
-                                  colors: [Colors.pinkAccent.withOpacity(0), Colors.pinkAccent],
+                                  colors: [Colors.pinkAccent.withAlpha(0), Colors.pinkAccent],
                                   stops: const [0.1, 1.0],
                                 ),
                                 belowBarData: BarAreaData(
                                   show: true,
                                   gradient: LinearGradient(
-                                    colors: [Colors.pinkAccent.withOpacity(0), Colors.pinkAccent.withOpacity(0.3)],
+                                    colors: [Colors.pinkAccent.withAlpha(0), Colors.pinkAccent.withAlpha(76)],
                                     stops: const [0.1, 1.0],
                                   ),
                                 ),
@@ -241,6 +242,9 @@ class _SystemInfoCardState extends State<SystemInfoCard> {
                 ),
               ),
             ),
+            const SizedBox(height: 8),
+            const XlaSlider(),
+            const SizedBox(height: 96),
           ],
         );
       }
